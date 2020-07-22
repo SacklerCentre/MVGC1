@@ -1,0 +1,227 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{a4wide}
+\usepackage[top=1.5cm,bottom=1.5cm,left=2cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{version}
+\usepackage{float}
+\usepackage[colorlinks]{hyperref}
+
+\usepackage{lcbmaths}
+
+\DeclareMathOperator{\Covop}	{cov}
+\newcommand{\Covs}[1]			{\Covop\!\bracr{#1}}
+\newcommand{\Cov}[2]			{\Covop\!\bracr{{#1},{#2}}}
+\newcommand{\Covc}[2]			{\Covop\!\bracr{\lcond{#1}{#2}}}
+
+\DeclareMathOperator{\Corrop}	{corr}
+\newcommand{\Corrs}[1]			{\Corrop\!\bracr{#1}}
+\newcommand{\Corr}[2]			{\Corrop\!\bracr{{#1},{#2}}}
+\newcommand{\Corrc}[2]			{\Corrop\!\bracr{\lcond{#1}{#2}}}
+
+\DeclareMathOperator{\trop}		{trace}
+\renewcommand{\trace}[1]		{\trop\!\bracr{#1}}
+\renewcommand{\dett}[1]			{\bracp{#1}}
+
+\DeclareMathOperator{\Tcorrop}	{\widetilde{\Corrop}}
+\newcommand{\Tcorr}[1]			{\Tcorrop\!\bracr{{#1}}}
+
+\DeclareMathOperator{\SDop}		{S}
+\newcommand{\Sdev}[1]			{\SDop\!\bracr{#1}}
+
+\DeclareMathOperator{\Varop}	{V}
+\newcommand{\Var}[1]			{\Varop\!\bracr{#1}}
+
+\DeclareMathOperator{\astop}	{\boldsymbol\dagger}
+\DeclareMathOperator{\pastop}	{\boldsymbol{--}}
+
+\DeclareMathOperator{\Parop}	{parity}
+
+\newcommand{\tobr}[1]			{^{({#1})}}
+\newcommand{\tobs}[1]			{^{[{#1}]}}
+\newcommand{\astr}				{^{\astop}}
+\newcommand{\past}				{^{\!\pastop}}
+
+\newcommand{\bX}				{\boldsymbol X}
+\newcommand{\bY}				{\boldsymbol Y}
+\newcommand{\bZ}				{\boldsymbol Z}
+\newcommand{\bU}				{\boldsymbol U}
+\newcommand{\bW}				{\boldsymbol W}
+\newcommand{\tX}				{\tilde X}
+\newcommand{\tY}				{\tilde Y}
+\newcommand{\tZ}				{\tilde Z}
+\newcommand{\tU}				{\tilde U}
+\newcommand{\tW}				{\tilde W}
+\newcommand{\btX}				{\tilde\bX}
+\newcommand{\btY}				{\tilde\bY}
+\newcommand{\btZ}				{\tilde\bZ}
+\newcommand{\btU}				{\tilde\bU}
+\newcommand{\btW}				{\tilde\bW}
+\newcommand{\blX}				{\bX\past}
+\newcommand{\blY}				{\bY\past}
+\newcommand{\blZ}				{\bZ\past}
+\newcommand{\blU}				{\bU\past}
+\newcommand{\blW}				{\bW\past}
+\newcommand{\bsX}				{\bX\astr}
+\newcommand{\bsY}				{\bY\astr}
+\newcommand{\bsZ}				{\bZ\astr}
+\newcommand{\bsU}				{\bU\astr}
+\newcommand{\bsW}				{\bW\astr}
+\newcommand{\bsYZ}				{\bY\!\bZ\astr}
+\newcommand{\bC}				{\boldsymbol C}
+\newcommand{\bM}				{\boldsymbol M}
+\newcommand{\bN}				{\boldsymbol N}
+\newcommand{\bP}				{\boldsymbol P}
+\newcommand{\bQ}				{\boldsymbol Q}
+\newcommand{\bR}				{\boldsymbol R}
+\newcommand{\bem}				{\boldsymbol m}
+\newcommand{\bx}				{\boldsymbol x}
+\newcommand{\by}				{\boldsymbol y}
+\newcommand{\bz}				{\boldsymbol z}
+\newcommand{\bu}				{\boldsymbol u}
+\newcommand{\eps}				{\varepsilon}
+\newcommand{\beps}				{\boldsymbol\eps}
+\newcommand{\balpha}			{\boldsymbol\alpha}
+\newcommand{\bbeta}				{\boldsymbol\beta}
+\newcommand{\beeta}				{\boldsymbol\eta}
+\newcommand{\mc}   				{\oplus}
+\newcommand{\cbX}				{\textrm{\textasciitilde}\!\bX}
+
+\DeclareMathOperator{\CN}		{\mathcal{C_N}}
+\DeclareMathOperator{\ECN}		{\mathcal{C_N}}
+\DeclareMathOperator{\TE}		{\mathcal T}
+\DeclareMathOperator{\GC}		{\mathcal F}
+\DeclareMathOperator{\GA}		{ga}              % AKS NEW
+\DeclareMathOperator{\GE}		{ge}              % AKS NEW
+\DeclareMathOperator{\ETE}		{\widehat\TE}
+\DeclareMathOperator{\EGC}		{\widehat\GC}
+\DeclareMathOperator{\CD}		{cd}
+\DeclareMathOperator{\CDX}		{\CD^\prime}
+
+\newcommand{\TGC}				{\GC^{tr}}
+\newcommand{\PGC}				{\GC^P}
+\newcommand{\PTE}				{\TE^P}
+
+\newcommand{\gc}[2]				{\GC_{{#1}\rightarrow{#2}}}
+\newcommand{\egc}[2]			{\EGC_{{#1}\rightarrow{#2}}}
+\newcommand{\cgc}[3]			{\GC_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\ecgc}[3]			{\EGC_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\tgc}[2]			{\TGC_{{#1}\rightarrow{#2}}}
+\newcommand{\ctgc}[3]			{\TGC_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\pgc}[2]			{\PGC_{{#1}\rightarrow{#2}}}
+\newcommand{\cpgc}[3]			{\PGC_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\xe}[2]				{\TE_{{#1}\rightarrow{#2}}}
+\newcommand{\cxe}[3]			{\TE_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\pxe}[2]			{\PTE_{{#1}\rightarrow{#2}}}
+\newcommand{\cpxe}[3]			{\PTE_{\lcond{{#1}\rightarrow{#2}}{#3}}}
+\newcommand{\tpi}               {2\pi i}
+\newcommand{\SGC}               {f}
+\newcommand{\sgc}[2]            {\SGC_{{#1}\to{#2}}}
+\newcommand{\scgc}[3]           {\SGC_{\lcond{{#1}\to{#2}}{#3}}}
+\newcommand{\TSGC}              {f^{tr}}
+\newcommand{\tsgc}[2]           {\TSGC_{{#1}\to{#2}}}
+\newcommand{\tscgc}[3]          {\TSGC_{\lcond{{#1}\to{#2}}{#3}}}
+\newcommand{\PSGC}              {\SGC^P}
+\newcommand{\psgc}[2]           {\PSGC_{{#1}\to{#2}}}
+\newcommand{\pscgc}[3]          {\PSGC_{\lcond{{#1}\to{#2}}{#3}}}
+\newcommand{\dlam}              {\,\dop\!\lambda}
+\newcommand{\domega}            {\,\dop\!\omega}
+
+\newcommand{\cgcx}[4]			{\GC_{\lcond{{#1}\rightarrow{#2}}{#3}|{#4}}}
+\newcommand{\cd}[1]				{\CD\!\bracr{{#1}}}
+\newcommand{\cdx}[1]			{\CDX\!\bracr{{#1}}}
+
+\newcommand{\ga}[2]             {\GA_{{#1}|{#2}}}           % AKS NEW
+\newcommand{\gem}[2]            {\GE_{{#1}|{#2}}}           % AKS NEW
+
+\DeclareMathOperator{\Vecop}	{\mathcal V}
+\newcommand{\vecit}[1]			{\Vecop({#1})}
+\DeclareMathOperator{\Lfrobop}	{\mathcal L}
+\newcommand{\lfrob}[1]			{\Lfrobop({#1})}
+\DeclareMathOperator{\Rfrobop}	{\mathcal R}
+\newcommand{\rfrob}[1]			{\Rfrobop({#1})}
+\DeclareMathOperator{\Dfrobop}	{\mathcal D}
+\newcommand{\dfrob}[1]			{\Dfrobop({#1})}
+
+\newcommand{\sGamma}			{\Gamma\astr}
+\newcommand{\bsGamma}			{\bGamma\astr}
+\newcommand{\bGamma}			{\boldsymbol\Gamma}
+\newcommand{\hGamma}			{\hat\Gamma}
+\newcommand{\bSigma}			{\boldsymbol\Sigma}
+\newcommand{\sSigma}			{\Sigma\astr}
+\newcommand{\hSigma}			{\hat\Sigma}
+\newcommand{\tGamma}			{\tilde\Gamma}
+\newcommand{\btGamma}			{\tilde{\boldsymbol\Gamma}}
+\newcommand{\bA}				{\boldsymbol A}
+\newcommand{\bB}				{\boldsymbol B}
+\newcommand{\bH}				{\boldsymbol H}
+\newcommand{\btB}				{\tilde{\boldsymbol B}}
+\newcommand{\hA}				{\hat A}
+\newcommand{\hbeps}				{\hat\beps}
+
+\newcommand{\bbA}[1]			{\mathbf{A{#1}}}
+
+\newcommand{\bxi}				{\boldsymbol\xi}
+\newcommand{\bzeta}				{\boldsymbol\zeta}
+
+\renewcommand{\eqref}[1]		{(\ref{#1})}
+\newcommand{\eeqref}[1]			{eq.~\eqref{#1}}
+\newcommand{\Eeqref}[1]			{Eq.~\eqref{#1}}
+\newcommand{\eqreff}[2]			{(\ref{#1},\ref{#2})}
+\newcommand{\eeqreff}[2]		{eqs.~\eqreff{#1}{#2}}
+\newcommand{\Eeqreff}[2]		{Eqs.~\eqreff{#1}{#2}}
+\newcommand{\secref}[1]			{section~\ref{#1}}
+\newcommand{\Secref}[1]			{Section~\ref{#1}}
+\newcommand{\apxref}[1]			{appendix~\ref{#1}}
+\newcommand{\Apxref}[1]			{Appendix~\ref{#1}}
+\newcommand{\figref}[1]			{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]			{Table~\ref{#1}}
+\newcommand{\matref}[2]			{\hyperref[#2]{\color{blue}\texttt{#1}}}
+\newcommand{\Aref}[1]			{\hyperref[A:#1]{\color{blue}[${#1}$]}}
+
+\definecolor{atncol}			{rgb}{0,0.6,0}
+%\newcommand{\atn}[1]			{[\textcolor{atncol}{\uppercase{#1}}]}
+\newcommand{\atn}[1]			{[\textcolor{atncol}{#1}]}
+
+%\floatstyle{plain}
+%\newfloat{groupstuff}{tbhp}{lop}
+%\floatname{groupstuff}{Group}
+
+\newcommand{\tcite}				{{\color{green}\textit{[citation]}}}
+\newcommand{\tref}				{{\color{blue}\textit{[internal ref]}}}
+
+\pagestyle{plain}
+
+\begin{document}
+
+foo $\makebox[1cm][l]{$$}X_t = Y_{t-1}$ bar
+
+
+\begin{figure}
+\centering
+\input{mvgc_schema.pspdftex}
+%\end{center}
+\ \\\ \\\ \\\ \\
+\begin{tabular}{ll}
+$\bbA {1}$  \label{A:1}  & Sample autocovariance estimation: \eeqref{eq:acf} \\
+$\bbA {2}$  \label{A:2}  & VAR parameter estimation - linear regression: \eeqref{eq:varp} (\eg\ by OLS or Morf's LWR algorithm) \\
+$\bbA {3}$  \label{A:3}  & VAR simulation (for testing): \eeqref{eq:varp}  \\
+$\bbA {4}$  \label{A:4}  & Sample spectral estimation (\eg\ Welch method, multi-taper, wavelet, \etc) \\
+$\bbA {5}$  \label{A:5}  & Reverse Yule-Walker \eeqref{eq:yw} solution (\eg\ via discrete Lyapunov equation solver) \\
+$\bbA {6}$  \label{A:6}  & Yule-Walker \eeqref{eq:yw} solution (\eg\ by Whittle's LWR algorithm) \\
+$\bbA {7}$  \label{A:7}  & VAR spectral factorisation: solution of \eeqref{eq:specfac} for $H(\lambda),\Sigma$ (\eg\ by Wilson's algorithm) \\
+$\bbA {8}$  \label{A:8}  & VAR spectral calculation: solution of \eeqref{eq:specfac} for $S(\lambda)$ \\
+$\bbA {9}$  \label{A:9}  & Fourier transform (FFT) of autocovariance sequence: \eeqref{eq:pspec} \\
+$\bbA {10}$ \label{A:10} & Inverse Fourier transform (IFFT) of cpsd: \eeqref{eq:ipspec} \\
+$\bbA {11}$ \label{A:11} & Autocovariance transform for reduced regression \eqref{eq:scgcreg} \\
+$\bbA {12}$ \label{A:12} & Spectral transform for reduced regression \eqref{eq:scgcreg} \\
+$\bbA {13}$ \label{A:13} & Time-domain Granger causality calculation: \eeqreff{eq:gc}{eq:cgc} \\
+$\bbA {14}$ \label{A:14} & Frequency-domain (unconditional) Granger causality calculation: \eeqref{eq:sgc} \\
+$\bbA {15}$ \label{A:15} & Integration: \eeqreff{eq:gcint}{eq:cgcint} \\
+\end{tabular}
+\ \\\ \\\
+\caption{Schematic of computational pathways for the MVGC Toolbox. The ``inner triangle'' (bold) represents the equivalence between the VAR representations outlined in \Secref{sec:var}. Bold arrows represent recommended (useful and computationally efficient) pathways.} \label{fig:mvgc_schema}
+\end{figure}
+
+\end{document}

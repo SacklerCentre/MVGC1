@@ -1,0 +1,168 @@
+\ProvidesPackage{lcbmaths}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{bm}
+
+% textual
+
+\newcommand{\todo}[0] {\vspace{0.3cm}$\bigstar$ \textbf{TODO}\vspace{0.3cm}}
+\newcommand{\Todo}[1] {\vspace{0.3cm}$\bigstar$ \textbf{TODO} \textit{{#1}}\vspace{0.3cm}}
+
+\newcommand{\etc}[0]     {etc.}
+\newcommand{\eg}[0]      {e.g.}
+\newcommand{\ie}[0]      {i.e.}
+\newcommand{\etal}[0]    {\textit{et al.}}
+\newcommand{\cf}[0]      {\textit{cf.}}
+\newcommand{\lig}[0]     {\!\!---\!\!}
+\newcommand{\comin}      {{\iffalse}}
+\newcommand{\comout}     {{\fi}}
+\newcommand{\rv}[0]      {\textnormal{r.v.}}
+
+% symbols
+
+\newcommand{\smallo}[1]    {\boldsymbol{\mathit o}\!\left({#1}\right)}
+\newcommand{\bigO}[1]      {\boldsymbol{\mathit O}\!\left({#1}\right)}
+\newcommand{\half}[0]      {\frac 1 2}
+\newcommand{\shalf}[0]     {\tfrac 1 2}
+\newcommand{\sthird}[0]    {\tfrac 1 3}
+\newcommand{\squart}[0]    {\tfrac 1 4}
+\newcommand{\seighth}[0]   {\tfrac 1 8}
+\newcommand{\identm}[0]    {\mathbf I}
+\newcommand{\onem}[0]      {\mathbf 1}
+\newcommand{\posints}[0]   {\mathbb N}
+\newcommand{\integers}[0]  {\mathbb Z}
+\newcommand{\reals}[0]     {\mathbb R}
+\newcommand{\complexes}[0] {\mathbb C}
+
+% brackets, etc.
+
+\newcommand{\bracr}[1]   {\left({#1}\right)}
+\newcommand{\bracs}[1]   {\left\lbrack{#1}\right\rbrack}
+\newcommand{\bracc}[1]   {\left\lbrace{#1}\right\rbrace}
+\newcommand{\bracp}[1]   {\left\lvert{#1}\right\rvert}
+\newcommand{\braca}[1]   {\left\langle{#1}\right\rangle}
+\newcommand{\bracv}[1]   {\left\Vert{#1}\right\Vert}
+\newcommand{\lcond}[2]   {\left.{#1}\,\right|{#2}}
+\newcommand{\rcond}[2]   {{#1}\left|\,{#2}\right.}
+\newcommand{\lbcond}[2]  {\bracr{\lcond{#1}{#2}}}
+\newcommand{\rbcond}[2]  {\bracr{\rcond{#1}{#2}}}
+
+% probability, etc
+
+\newcommand{\probop}			{{\mathbf P}}
+\newcommand{\expectop}			{{\mathbf E}}
+\newcommand{\entrop}			{{\mathbf H}}
+\newcommand{\mutinfop}			{{\mathbf I}}
+\newcommand{\kldivop}			{{\mathbf D}}
+
+%\newcommand{\probop}			{{\boldsymbol P}}
+%\newcommand{\expectop}			{{\boldsymbol E}}
+%\newcommand{\entrop}			{{\boldsymbol H}}
+%\newcommand{\mutinfop}			{{\boldsymbol I}}
+
+\DeclareMathOperator{\dop}     {d}
+\DeclareMathOperator{\varop}   {var}
+\DeclareMathOperator{\covop}   {cov}
+\DeclareMathOperator{\corrop}  {corr}
+\DeclareMathOperator{\skewop}  {skew}
+\DeclareMathOperator{\diagop}  {diag}
+\DeclareMathOperator{\traceop} {trace}
+\DeclareMathOperator{\sech}    {sech}
+\DeclareMathOperator{\transop} {^\intercal}
+\DeclareMathOperator{\ctranop} {*}
+
+\newcommand{\prob}[1]    {\probop\!\bracr{#1}}
+\newcommand{\cprob}[2]   {\prob{\lcond{#1}{#2}}}
+\newcommand{\expect}[1]  {\expectop\!\bracr{#1}}
+\newcommand{\cexpect}[2] {\expect{\lcond{#1}{#2}}}
+\newcommand{\var}[1]     {\varop\!\bracr{#1}}
+\newcommand{\cvar}[2]    {\var{\lcond{#1}{#2}}}
+\newcommand{\cov}[2]     {\covop\!\bracr{{#1},{#2}}}
+\newcommand{\covs}[1]    {\covop\!\bracr{{#1}}}
+\newcommand{\ccov}[3]    {\cov{#1}{\lcond{#2}{#3}}}
+\newcommand{\ccovs}[2]   {\covs{\lcond{#1}{#2}}}
+\newcommand{\corr}[2]    {\corrop\!\bracr{{#1},{#2}}}
+\newcommand{\ccorr}[3]   {\corr{#1}{\lcond{#2}{#3}}}
+\newcommand{\entro}[1]   {\entrop\!\bracr{#1}}
+\newcommand{\centro}[2]  {\entro{\lcond{#1}{#2}}}
+\newcommand{\mutinf}[2]  {\mutinfop\!\bracr{{#1}:{#2}}}
+\newcommand{\cmutinf}[3] {\mutinfop\!\bracr{\lcond{{#1}:{#2}}{#3}}}
+\newcommand{\kldiv}[2]   {\kldivop\!\bracr{{#1}\!\parallel\!{#2}}}
+\newcommand{\mean}[1]    {\braca{#1}}
+\newcommand{\skw}[1]     {\skewop\!\bracr{#1}}
+\newcommand{\trace}[1]   {\traceop\!\bracr{#1}}
+\newcommand{\diag}[1]    {\diagop\!\bracr{{#1}}}
+\newcommand{\dabs}[1]    {\left\lVert{#1}\right\rVert}
+\newcommand{\convl}[2]   {{#1}\!*\!{#2}}
+
+% other
+
+\newcommand{\re}[0]       {\mathfrak{Re}}
+\newcommand{\im}[0]       {\mathfrak{Im}}
+\newcommand{\abs}[1]      {\bracp{#1}}
+\newcommand{\dst}[1]      {\bracv{#1}}
+\newcommand{\set}[1]      {\bracc{#1}}
+\newcommand{\vect}[1]     {\bracr{#1}}
+\newcommand{\dett}[1]     {\det\bracr{#1}}
+\newcommand{\lnt}[1]      {\ln\!\bracr{#1}}
+\newcommand{\logt}[1]     {\log\!\bracr{#1}}
+\newcommand{\expt}[1]     {\exp\!\bracr{#1}}
+\newcommand{\eee}[1]      {e^{#1}}
+\newcommand{\Min}[1]      {\min\!\bracr{#1}}
+\newcommand{\Max}[1]      {\max\!\bracr{#1}}
+\newcommand{\order}[1]    {\mathit{o}\left({#1}\right)}
+\newcommand{\mapping}[3]  {{#1}\colon{#2}\to{#3}}
+\newcommand{\finished}[0] {\hspace{\stretch{1}}$\blacksquare$}
+\newcommand{\ubi}[2]      {{#1}^{\left({#2}\right)}}
+\newcommand{\lbi}[2]      {{#1}_{\left({#2}\right)}}
+\newcommand{\pdivf}[1]    {\frac{\partial}{\partial{#1}}}
+\newcommand{\pdivg}[2]    {\frac{\partial^{#1}}{\partial{#2}^{#1}}}
+\newcommand{\pdiv}[2]     {\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\pdivk}[3]    {\frac{\partial^{#3}{#1}}{\partial{#2}^{#3}}}
+\newcommand{\pdivt}[3]    {\frac{\partial^2{#1}}{\partial{#2}\partial{#3}}}
+\newcommand{\trans}[1]    {{#1}\!\transop}
+\newcommand{\ctran}[1]    {{#1}\!\ctranop}
+\newcommand{\ctranx}[2]   {{{#1}\!\ctranop}_{\!\!\!\!#2}}
+\newcommand{\inoo}[2]     {\left({#1},{#2}\right)}
+\newcommand{\inco}[2]     {\left[{#1},{#2}\right)}
+\newcommand{\inoc}[2]     {\left({#1},{#2}\right]}
+\newcommand{\incc}[2]     {\left[{#1},{#2}\right]}
+%\newcommand{\comb}[2]    {\left(\!\!\!\begin{array}{c}{#1}\\{#2}\end{array}\!\!\!\right)}
+\newcommand{\binod}[3]    {\binom{#1}{#2}{#3}^{#2}\left(1-{#3}\right)^{{#1}-{#2}}}
+\newcommand{\Pois}[2]     {\frac{{#1}^{#2}}{{#2}!} e^{-{#1}}}
+\newcommand{\subsa}[3]    {{#1}_{#2}^{\!\phantom{#2}{#3}}}
+\newcommand{\subsb}[3]    {{#1}^{#3}_{\!\phantom{#3}{#2}}}
+
+\newcommand{\eqreftwo}[2]	{(\ref{#1},\:\ref{#2})}
+\newcommand{\eqrefthree}[3]	{(\ref{#1},\:\ref{#2},\:\ref{#3})}
+\newcommand{\eqreffour}[4]	{(\ref{#1},\:\ref{#2},\:\ref{#3},\:\ref{#4})}
+\newcommand{\eqreffive}[5]	{(\ref{#1},\:\ref{#2},\:\ref{#3},\:\ref{#4},\:\ref{#2})}
+
+
+% The following causes equations to be numbered within sections
+% \numberwithin{equation}{section}
+
+% We'll use the equation counter for all our theorem environments, so
+% that everything will be numbered in the same sequence.
+
+%       Theorem environments
+
+\theoremstyle{plain}
+\newtheorem{thm}[equation]{Theorem}
+\newtheorem{cor}[equation]{Corollary}
+\newtheorem{lem}[equation]{Lemma}
+\newtheorem{prop}[equation]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[equation]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{rem}[equation]{Remark}
+\newtheorem{ex}[equation]{Example}
+\newtheorem{notation}[equation]{Notation}
+\newtheorem{terminology}[equation]{Terminology}
