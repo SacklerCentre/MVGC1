@@ -1,0 +1,19 @@
+This is the MVGC Multivariate Granger Causality MATLAB toolbox, previously
+hosted at http://www.sussex.ac.uk/sackler/mvgc
+
+Current version is mvgc_v1.0, last updated on September 01 2018
+
+This toolbox, developed at the Sackler Centre for Consciousness Science,
+University of Sussex, UK, provides MATLAB routines for efficient and accurate
+estimation and statistical inference of multivariate Granger causality from
+time-series data, as described in:
+
+Lionel Barnett and Anil K. Seth, "The MVGC Multivariate Granger Causality Toolbox:
+A new approach to Granger-causal inference", J. Neurosci. Methods 223 (2014), pp 50-68.
+
+For general support issues, comments, questions, bug reports and suggested enhancements,
+please email mvgctoolbox@sussex.ac.uk. We would especially like to know if you have
+found the toolbox useful in your research.
+
+Please note that this software is provided freely under the GNU General Public License
+(version 3) and is for use at your own risk.
