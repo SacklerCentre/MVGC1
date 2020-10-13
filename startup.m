@@ -43,8 +43,8 @@ addpath(fullfile(mvgc_root,'experimental'));
 addpath(fullfile(mvgc_root,'docs')); % don't add the 'html' subdirectory
 
 % comment out for release
-addpath(fullfile(mvgc_root,'testing'));
-addpath(fullfile(mvgc_root,'maintainer'));
+% addpath(fullfile(mvgc_root,'testing'));
+% addpath(fullfile(mvgc_root,'maintainer'));
 
 fprintf('[mvgc startup] Added MVGC root directory %s and subdirectories to path\n',mvgc_root);
 
