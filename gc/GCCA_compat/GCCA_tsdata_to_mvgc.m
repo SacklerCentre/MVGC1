@@ -119,4 +119,4 @@ if warn_if(isbad(SIGR),'in reduced regression - regression failed'), return; end
 % we should really check that SIGR is positive-definite; we don't, for effciency reasons
 
 x = 1:length(x);
-F = log(det(SIGR(x,x)))-log(det(SIG(x,x)));
+F = logdet(SIGR(x,x))-logdet(SIG(x,x));

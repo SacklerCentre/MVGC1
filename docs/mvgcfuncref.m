@@ -7,6 +7,7 @@
 %% Demonstration scripts
 %
 % * <mvgc_demo.html mvgc_demo>
+% * <mvgc_demo_autocov.html mvgc_demo_autocov>
 % * <mvgc_demo_bootstrap.html mvgc_demo_bootstrap>
 % * <mvgc_demo_GCCA.html mvgc_demo_GCCA>
 % * <mvgc_demo_nonstationary.html mvgc_demo_nonstationary>
@@ -39,6 +40,10 @@
 % * <autocov_to_smvgc.html autocov_to_smvgc>
 % * <autocov_to_spwcgc.html autocov_to_spwcgc>
 % * <smvgc_to_mvgc.html smvgc_to_mvgc>
+% * <var_to_mvgc.html var_to_mvgc>
+% * <var_to_pwcgc.html var_to_pwcgc>
+% * <var_to_smvgc.html var_to_smvgc>
+% * <var_to_spwcgc.html var_to_spwcgc>
 %
 %% Granger causality: GCCA compatibility
 %
@@ -94,10 +99,13 @@
 % * <isbad.html idbad>
 % * <isint.html isint>
 % * <isposdef.html isposdef>
+% * <logdet.html logdet>
 % * <maxabs.html maxabs>
+% * <multiinfo.html multiinfo>
 % * <mvdetrend.html mvdetrend>
 % * <mvdiff.html mvdiff>
 % * <mvgc_makemex.html mvgc_makemex>
+% * <parcov.html parcov>
 % * <plot_autocov.html plot_autocov>
 % * <plot_confints.html plot_confints>
 % * <plot_cpsd.html plot_cpsd>
@@ -113,11 +121,15 @@
 % * <rng_seed.html rng_seed>
 % * <secs2hms.html secs2hms>
 % * <sfreqs.html sfreqs>
+% * <ss2iss.html ss2iss>
+% * <ss2itrfun.html ss2itrfun>
 % * <timestr.html timestr>
 % * <trfun2var.html trfun2var>
 % * <var2trfun.html var2trfun>
+% * <var2riss.html var2riss>
 % * <var_decay.html var_decay>
 % * <var_info.html var_info>
+% * <var_acinfo.html var_acinfo>
 % * <var_normalise.html var_normalise>
 % * <var_specrad.html var_specrad>
 % * <warn_if.html warn_if>

@@ -50,7 +50,7 @@
 % coefficients define a stable VAR [1]. (This is calculated, along with other
 % relevant information, in the routine <var_to_autocov.html |var_to_autocov|>,
 % which will typically be called subsequent to this function, and may be tested
-% by a call to <var_info.html |var_info|>).
+% by a call to <var_acinfo.html |var_acinfo|>).
 %
 %% References
 %
@@ -70,7 +70,7 @@
 % <warn_supp.html |warn_supp|> |
 % <warn_test.html |warn_test|> |
 % <isbad.html |isbad|> |
-% <var_info.html |var_info|>
+% <var_acinfo.html |var_acinfo|>
 %
 % (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
 % installation directory for licensing terms.

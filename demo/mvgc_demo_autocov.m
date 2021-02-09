@@ -1,4 +1,4 @@
-%% MVGC demo
+%% MVGC demo (old version, based on autocovariance sequence)
 %
 % Demonstrates typical usage of the MVGC toolbox on generated VAR data for a
 % 5-node network with known causal structure (see <var5_test.html |var5_test|>).
@@ -148,29 +148,35 @@ ptoc;
 
 assert(~isbad(A),'VAR estimation failed');
 
-
-% Report information on the estimated VAR, and check for errors.
-%
-% _IMPORTANT:_ We check the VAR model for stability and symmetric
-% positive-definite residuals covariance matrix. _THIS CHECK SHOULD ALWAYS BE
-% PERFORMED!_ - subsequent routines may fail if there are errors here. If there
-% are problems with the data (e.g. non-stationarity, colinearity, etc.) there's
-% also a good chance they'll show up at this point - and the diagnostics may
-% supply useful information as to what went wrong.
-
-info = var_info(A,SIG);
-assert(~info.error,'VAR error(s) found - bailing out');
-
 % NOTE: at this point we have a model and are finished with the data! - all
 % subsequent calculations work from the estimated VAR parameters A and SIG.
 
+%% Autocovariance calculation (<mvgc_schema.html#3 |A5|>)
+
+% The autocovariance sequence drives many Granger causality calculations (see
+% next section). Now we calculate the autocovariance sequence G according to the
+% VAR model, to as many lags as it takes to decay to below the numerical
+% tolerance level, or to acmaxlags lags if specified (i.e. non-empty).
+
+ptic('*** var_to_autocov... ');
+[G,info] = var_to_autocov(A,SIG,acmaxlags);
+ptoc;
+
+% The above routine does a LOT of error checking and issues useful diagnostics.
+% If there are problems with your data (e.g. non-stationarity, colinearity,
+% etc.) there's a good chance it'll show up at this point - and the diagnostics
+% may supply useful information as to what went wrong. It is thus essential to
+% report and check for errors here.
+
+var_acinfo(info,true); % report results (and bail out on error)
+
 %% Granger causality calculation: time domain  (<mvgc_schema.html#3 |A13|>)
 
-% Calculate time-domain pairwise-conditional causalities from VAR model parameters
-% by state-space method.
+% Calculate time-domain pairwise-conditional causalities - this just requires
+% the autocovariance sequence.
 
-ptic('*** var_to_pwcgc... ');
-F = var_to_pwcgc(A,SIG);
+ptic('*** autocov_to_pwcgc... ');
+F = autocov_to_pwcgc(G);
 ptoc;
 
 % Check for failed GC calculation
@@ -206,26 +212,12 @@ fprintf('\ncausal density = %f\n',cd);
 
 %% Granger causality calculation: frequency domain  (<mvgc_schema.html#3 |A14|>)
 
-% Calculate spectral pairwise-conditional causalities resolution from VAR model
-% parameters. If not specified, we set the frequency resolution to something
-% sensible. Warn if resolution is very large, as this may cause problems.
-
-if isempty(fres)
-    fres = 2^nextpow2(info.acdec); % alternatively, fres = 2^nextpow2(nobs);
-	fprintf('\nFrequency resolution auto-calculated as %d\n',fres);
-end
-if fres > 10000 % adjust to taste
-	fprintf(2,'\nWARNING: large frequency resolution = %d - may cause computation time/memory usage problems\nAre you sure you wish to continue [y/n]? ',fres);
-	istr = input(' ','s'); if isempty(istr) || ~strcmpi(istr,'y'); fprintf(2,'Aborting...\n'); return; end
-end
-
 % Calculate spectral pairwise-conditional causalities at given frequency
-% resolution by state-space method.
+% resolution - again, this only requires the autocovariance sequence.
 
-ptic(sprintf('\n*** var_to_spwcgc... ',fres));
-f = var_to_spwcgc(A,SIG,fres);
+ptic('\n*** autocov_to_spwcgc... ');
+f = autocov_to_spwcgc(G,fres);
 ptoc;
-assert(~isbad(f,false),'spectral GC estimation failed');
 
 % Check for failed spectral GC calculation
 

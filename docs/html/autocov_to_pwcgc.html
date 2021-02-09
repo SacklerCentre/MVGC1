@@ -133,7 +133,7 @@ F = nan(n);
 
 owstate = warn_supp;
 [~,SIG] = autocov_to_var(G);
-warn_test(owstate,    'in full regression - bad autocovariance matrix? Check output of ''var_info''');
+warn_test(owstate,    'in full regression - bad autocovariance matrix? Check output of ''var_acinfo''');
 if warn_if(isbad(SIG),'in full regression - regression failed'), return; end % show-stopper!
 
 LSIG = log(diag(SIG));
@@ -146,7 +146,7 @@ for j = 1:n
 
     owstate = warn_supp;
     [~,SIGj] = autocov_to_var(G(jo,jo,:));
-    warn_test(owstate,     sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_info''',j));
+    warn_test(owstate,     sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_acinfo''',j));
     if warn_if(isbad(SIGj),sprintf('in reduced regression for target node %d - regression failed',j)), continue; end % show-stopper!
     
     LSIGj = log(diag(SIGj));

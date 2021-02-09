@@ -91,16 +91,16 @@ for j = 1:n
 
     owstate = warn_supp;
     [Aj,SIGj] = autocov_to_var(G(jo,jo,:));  % reduced regression
-    warn_test(owstate,   sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_info''',j));
+    warn_test(owstate,   sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_acinfo''',j));
     if warn_if(isbad(Aj),sprintf('in reduced regression for target node %d - regression failed',j)), continue; end % show-stopper!
-    
+
     Gj = autocov_xform(G(joj,joj,:),Aj,SIGj,useFFT); % transform autocov
-    
+
     owstate = warn_supp;
     [Ajj,SIGjj] = autocov_to_var(Gj);        % transformed full regression
-    warn_test(owstate,    sprintf('in transformed regression for target node %d - bad autocovariance matrix? Check output of ''var_info''',j));
+    warn_test(owstate,    sprintf('in transformed regression for target node %d - bad autocovariance matrix? Check output of ''var_acinfo''',j));
     if warn_if(isbad(Ajj),sprintf('in transformed regression for target node %d - regression failed',j)), continue; end % show-stopper!
-    
+
     owstate = warn_supp;
     Hjj = var2trfun(Ajj,fres);               % transfer function
     warn_test(owstate,    sprintf('in transfer function for target node %d',j));
@@ -113,7 +113,7 @@ for j = 1:n
         SIGji = SIGjj(io,io)-(SIGjj(io,ii)*SIGjj(ii,io))/SIGjj(ii,ii); % partial covariance
         Hji = Hjj(ii,io,:);                                            % transfer function
         Sji = SIGj(ii,ii);                                             % i part of spectrum is flat!
-        
+
         LSji = log(Sji);
         for k = 1:h
             f(i,j,k) = LSji - log(real(Sji-Hji(:,:,k)*SIGji*Hji(:,:,k)'));

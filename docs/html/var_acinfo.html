@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>var_info</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="var_info.m"><style type="text/css">
+      --><title>var_acinfo</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="var_acinfo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -65,18 +65,18 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>var_info</h1><!--introduction--><p>Display VAR information as returned by <tt>var_to_autocov</tt></p><p><a href="matlab:open('var_info.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   acerr = var_info(info,abort_on_error)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   info            info structure returned by var_to_autocov
+  </style></head><body><div class="content"><h1>var_acinfo</h1><!--introduction--><p>Display VAR information as returned by <tt>var_to_autocov</tt></p><p><a href="matlab:open('var_acinfo.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   acerr = var_acinfo(info,abort_on_error)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   info            info structure returned by var_to_autocov
    abort_on_error  if set to true, abort if var_to_autocov reports an error</pre><p><i>output</i></p><pre>   acerr           flag set to true if var_to_autocov reports an error</pre><h2>Description<a name="3"></a></h2><p>Displays information (errors, warnings, diagnostics, <i>etc</i>.) reported by the routine <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a>; see that routine for details. This function should <i>always</i> be called after a call to <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a>.</p><h2>See also<a name="4"></a></h2><p><a href="var_to_autocov.html"><tt>var_to_autocov</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% var_info
+%% var_acinfo
 %
 % Display VAR information as returned by |var_to_autocov|
 %
-% <matlab:open('var_info.m') code>
+% <matlab:open('var_acinfo.m') code>
 %
 %% Syntax
 %
-%     acerr = var_info(info,abort_on_error)
+%     acerr = var_acinfo(info,abort_on_error)
 %
 %% Arguments
 %
@@ -107,7 +107,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 %
 %%
 
-function acerr = var_info(info,abort_on_error)
+function acerr = var_acinfo(info,abort_on_error)
 
 if nargin < 2 || isempty(abort_on_error), abort_on_error = true; end
 

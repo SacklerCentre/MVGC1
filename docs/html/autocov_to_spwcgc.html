@@ -162,14 +162,14 @@ for j = 1:n
 
     owstate = warn_supp;
     [Aj,SIGj] = autocov_to_var(G(jo,jo,:));  % reduced regression
-    warn_test(owstate,   sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_info''',j));
+    warn_test(owstate,   sprintf('in reduced regression for target node %d - bad autocovariance matrix? Check output of ''var_acinfo''',j));
     if warn_if(isbad(Aj),sprintf('in reduced regression for target node %d - regression failed',j)), continue; end % show-stopper!
     
     Gj = autocov_xform(G(joj,joj,:),Aj,SIGj,useFFT); % transform autocov
     
     owstate = warn_supp;
     [Ajj,SIGjj] = autocov_to_var(Gj);        % transformed full regression
-    warn_test(owstate,    sprintf('in transformed regression for target node %d - bad autocovariance matrix? Check output of ''var_info''',j));
+    warn_test(owstate,    sprintf('in transformed regression for target node %d - bad autocovariance matrix? Check output of ''var_acinfo''',j));
     if warn_if(isbad(Ajj),sprintf('in transformed regression for target node %d - regression failed',j)), continue; end % show-stopper!
     
     owstate = warn_supp;

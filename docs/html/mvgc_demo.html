@@ -162,7 +162,7 @@ ptoc;
 <span class="comment">% may supply useful information as to what went wrong. It is thus essential to</span>
 <span class="comment">% report and check for errors here.</span>
 
-var_info(info,true); <span class="comment">% report results (and bail out on error)</span>
+var_acinfo(info,true); <span class="comment">% report results (and bail out on error)</span>
 </pre><h2>Granger causality calculation: time domain  (<a href="mvgc_schema.html#3"><tt>A13</tt></a>)<a name="7"></a></h2><pre class="codeinput"><span class="comment">% Calculate time-domain pairwise-conditional causalities - this just requires</span>
 <span class="comment">% the autocovariance sequence.</span>
 
@@ -399,7 +399,7 @@ ptoc;
 % may supply useful information as to what went wrong. It is thus essential to
 % report and check for errors here.
 
-var_info(info,true); % report results (and bail out on error)
+var_acinfo(info,true); % report results (and bail out on error)
 
 %% Granger causality calculation: time domain  (<mvgc_schema.html#3 |A13|>)
 

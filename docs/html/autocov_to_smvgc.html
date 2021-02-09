@@ -188,7 +188,7 @@ if isempty(z) % unconditional
 
     owstate = warn_supp;
     [A,SIG] = autocov_to_var(G);                  % full regression
-    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(A), 'in full regression - regression failed'), return; end % show-stopper!
     
     owstate = warn_supp;
@@ -217,7 +217,7 @@ else % conditional
     
     owstate = warn_supp;
     [AR,SIGR] = autocov_to_var(G(xz,xz,:));           % reduced regression
-    warn_test(owstate,    'in reduced regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,    'in reduced regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(AR), 'in reduced regression - regression failed'), return; end % show-stopper!
     
     G = autocov_xform(G,AR,SIGR,useFFT);              % transform autocov
@@ -226,7 +226,7 @@ else % conditional
 
     owstate = warn_supp;
     [A,SIG] = autocov_to_var(G);                      % full regression
-    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(A), 'in full regression - regression failed'), return; end % show-stopper!
     
     S = SIGR(x,x);                                    % only need x part of cpsd - which is flat spectrum!

@@ -49,7 +49,7 @@
 % |warn_supp|> ... <warn_test.html |warn_test|> respectively. The likely cause
 % is that something went wrong in <var_to_autocov.html |var_to_autocov|>, which
 % is typically called prior to this function; check the results of the latter
-% with a <var_info.html |var_info|> call.
+% with a <var_acinfo.html |var_acinfo|> call.
 %
 %% References
 %
@@ -70,7 +70,7 @@
 % <warn_supp.html |warn_supp|> |
 % <warn_test.html |warn_test|> |
 % <isbad.html |isbad|> |
-% <var_info.html |var_info|>
+% <var_acinfo.html |var_acinfo|>
 %
 % (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
 % installation directory for licensing terms.
