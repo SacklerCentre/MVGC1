@@ -22,6 +22,7 @@
 %% Description
 %
 % Returns the log-determinant of the Hermitia positive-definite matrix V in L.
+%
 % Essentially the same as |log(det(V))|, but avoids potential under/overflow. The 'flag'
 % variable is zero if V is Hermitian positive-definite. If V is not Hermitian positive-
 % definite, the real part of the log-determinant is returned if the imaginary part is not

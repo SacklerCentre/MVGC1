@@ -57,10 +57,10 @@ else % conditional
 
 	KR = zeros(pn,nr);
 	KR(r,:) = eye(nr);
-	kn = 0;
-	for ky = 0:ny:pny1
-		KR(kn+y,:) = KT(ky+1:ky+ny,:);
-		kn = kn+n;
+	qn = 0;
+	for qy = 0:ny:pny1
+		KR(qn+y,:) = KT(qy+1:qy+ny,:);
+		qn = qn+n;
 	end
     BR = ss2itrfun(AR,CR,KR,fres);
 

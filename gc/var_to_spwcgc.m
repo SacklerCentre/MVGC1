@@ -14,46 +14,44 @@ f = nan(n,n,h);
 
 % for efficiency we pre-compute some stuff
 
-AR = [reshape(A,n,pn); eye(pn1) zeros(pn1,n)];
+AA = [reshape(A,n,pn); eye(pn1) zeros(pn1,n)];
 H  = var2trfun(A,fres);
 PSIGL = zeros(n1,n1,n);
-for y = 1:n
-    r = [1:y-1 y+1:n]; % omit y
-    PSIGL(:,:,y) = chol(parcov(SIG,r,y),'lower'); % pre-compute the partial covariances for efficiency
+for j = 1:n
+    jo = [1:j-1 j+1:n]; % omit j
+    PSIGL(:,:,j) = chol(parcov(SIG,jo,j),'lower'); % pre-compute the partial covariances for efficiency
 end
 
-for y = 1:n
-    r = [1:y-1 y+1:n]; % omit y
+for j = 1:n
+    jo = [1:j-1 j+1:n]; % omit j
 
 	% Solve the shrunken DARE
 
-	[KT,VR,rep] = var2riss(A,SIG,y,r);
-    if sserror(rep,y), continue; end % check DARE report, bail out on error
+	[KJ,SIGj,rep] = var2riss(A,SIG,j,jo);
+    if sserror(rep,j), continue; end % check DARE report, bail out on error
 
-	% Calculate reduced SS parameters from shrunken DARE (note: VR is the same)
+	% Calculate reduced SS parameters from shrunken DARE (note: SIGj is the same)
 
-	CR = reshape(A(r,:,:),n1,pn);
-	KR = zeros(pn,n1);
-	KR(r,:) = eye(n1);
-	kn = 0;
-	for k1 = 1:p
-		KR(kn+y,:) = KT(k1,:);
-		kn = kn+n;
+	Cj = reshape(A(jo,:,:),n1,pn);
+	Kj = zeros(pn,n1);
+	Kj(jo,:) = eye(n1);
+	qn = 0;
+	for q = 1:p
+		Kj(qn+j,:) = KJ(q,:);
+		qn = qn+n;
 	end
-    BR = ss2itrfun(AR,CR,KR,fres);
+    Bj = ss2itrfun(AA,Cj,Kj,fres);
 
 	% Calculate spectral GC
 
-    for xr = 1:n1
-        x  = r(xr);
-        w = [1:x-1 x+1:n];  % omit x
-
-        SR  = VR(xr,xr); % reduced model spectrum is flat!
-        LSR = log(SR);
-
+    for ii = 1:n1
+        i  = jo(ii);
+        ijo = [1:i-1 i+1:n]; % omit i
+        Sj  = SIGj(ii,ii);   % reduced model spectrum is flat!
+        LSj = log(Sj);
         for k = 1:h
-            HR = BR(xr,:,k)*H(r,w,k)*PSIGL(:,:,x);
-            f(x,y,k) = LSR - log(SR-HR*HR');
+            Hjk = Bj(ii,:,k)*H(jo,ijo,k)*PSIGL(:,:,i);
+            f(i,j,k) = LSj - log(Sj-Hjk*Hjk');
         end
     end
 end
