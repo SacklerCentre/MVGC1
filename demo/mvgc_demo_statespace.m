@@ -1,9 +1,9 @@
-%% MVGC demo
+%% MVGC demo: state-space method.
 %
-% *_Note_*: This demo demonstrates basic usage of the MVGC toolbox using the
-% state-space method introduced in [4]. We recommend this approach as default,
-% since it is in general faster and potentially more accurate. For the previous
-% autocovariance-based method, see <mvgc_demo_autovov.html |mvgc_demo_autovov|>.
+% This demo demonstrates basic usage of the MVGC toolbox using the state-space
+% method introduced in [4]. We recommend this approach as default, since it is
+% in general faster and potentially more accurate. For the default autocovariance-
+% based method, see <mvgc_demo.html |mvgc_demo|>.
 %
 % Demonstrates typical usage of the MVGC toolbox on generated VAR data for a
 % 5-node network with known causal structure (see <var5_test.html |var5_test|>).
