@@ -236,13 +236,15 @@ plot_spw(f,fs);
 % Check that spectral causalities average (integrate) to time-domain
 % causalities, as they should according to theory.
 
-fprintf('\nfrequency-domain GC integration test... ');
+fprintf('\nfrequency-domain GC integration check... ');
 Fint = smvgc_to_mvgc(f); % integrate spectral MVGCs
-mad = maxabs(F-Fint);
-if mad < 1e-5
-    fprintf('OK (maximum absolute difference ~ %.0e)\n',mad);
+amax = maxabs(F+Fint)/2;
+if amax < 1e-5; amax = 1; end % in case all GCs very small
+mre = maxabs(F-Fint)/amax;
+if mre < 1e-5
+    fprintf('OK (maximum relative error ~ %.0e)\n',mre);
 else
-    fprintf(2,'WARNING: high maximum absolute difference ~ %.0e\n',mad);
+    fprintf(2,'WARNING: high maximum relative error ~ %.0e\n',mre);
 end
 
 %%
