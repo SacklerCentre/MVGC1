@@ -1,5 +1,7 @@
-%% MVGC demo (see also demo using new, more efficient state-space method:
-% <mvgc_demo_statespace.html |mvgc_demo_statespace|>).
+%% MVGC demo
+%
+% See also demo using new, more efficient state-space method:
+% <mvgc_demo_statespace.html |mvgc_demo_statespace|>.
 %
 % Demonstrates typical usage of the MVGC toolbox on generated VAR data for a
 % 5-node network with known causal structure (see <var5_test.html |var5_test|>).
@@ -234,14 +236,13 @@ plot_spw(f,fs);
 % Check that spectral causalities average (integrate) to time-domain
 % causalities, as they should according to theory.
 
-fprintf('\nchecking that frequency-domain GC integrates to time-domain GC... \n');
+fprintf('\nfrequency-domain GC integration test... ');
 Fint = smvgc_to_mvgc(f); % integrate spectral MVGCs
 mad = maxabs(F-Fint);
-madthreshold = 1e-5;
-if mad < madthreshold
-    fprintf('maximum absolute difference OK: = %.2e (< %.2e)\n',mad,madthreshold);
+if mad < 1e-5
+    fprintf('OK (maximum absolute difference ~ %.0e)\n',mad);
 else
-    fprintf(2,'WARNING: high maximum absolute difference = %e.2 (> %.2e)\n',mad,madthreshold);
+    fprintf(2,'WARNING: high maximum absolute difference ~ %.0e\n',mad);
 end
 
 %%

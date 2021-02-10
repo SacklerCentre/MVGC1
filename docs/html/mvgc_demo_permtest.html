@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>MVGC permutation test demo</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="mvgc_demo_permtest.m"><style type="text/css">
+      --><title>MVGC permutation test demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-10"><meta name="DC.source" content="mvgc_demo_permtest.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>MVGC permutation test demo</h1><!--introduction--><p>Demonstrates permutation significance testing with MVGC on generated VAR data for a 5-node network with known causal structure (see <a href="var5_test.html"><tt>var5_test</tt></a>). Pairwise-conditional Granger causalities are estimated and significance tested using both the theoretical and permutation test null distributions. The theoretical and permutation test null distributions for all pairs are plotted together and compared using a Kolmogorov-Smirnov test (see <a href="matlab:doc('kstest')"><tt>kstest</tt></a>).</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">References</a></li><li><a href="#2">Parameters</a></li><li><a href="#3">Generate VAR data</a></li><li><a href="#4">VAR model estimation and autocovariance calculation</a></li><li><a href="#5">Granger causality estimation</a></li><li><a href="#6">Permutation test</a></li><li><a href="#7">Plot causalities, p-values, significance and cdfs</a></li></ul></div><h2>References<a name="1"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] M. J. Anderson and J. Robinson, Permutation tests for linear models, <i>Aust. N. Z. J. Stat.</i>, 43(1), 2001.</p><h2>Parameters<a name="2"></a></h2><pre class="codeinput">ntrials   = 10;     <span class="comment">% number of trials</span>
+  </style></head><body><div class="content"><h1>MVGC permutation test demo</h1><!--introduction--><p>Demonstrates permutation significance testing with MVGC on generated VAR data for a 5-node network with known causal structure (see <a href="var5_test.html"><tt>var5_test</tt></a>). Pairwise-conditional Granger causalities are estimated and significance tested using both the theoretical and permutation test null distributions. The theoretical and permutation test null distributions for all pairs are plotted together and compared using a Kolmogorov-Smirnov test (see <a href="matlab:doc('kstest')"><tt>kstest</tt></a>).</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">References</a></li><li><a href="#2">Parameters</a></li><li><a href="#3">Generate VAR data</a></li><li><a href="#4">VAR model estimation and autocovariance calculation</a></li><li><a href="#5">Granger causality estimation</a></li><li><a href="#6">Permutation test</a></li><li><a href="#7">Plot causalities, p-values, significance and cdfs</a></li></ul></div><h2 id="1">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] M. J. Anderson and J. Robinson, Permutation tests for linear models, <i>Aust. N. Z. J. Stat.</i>, 43(1), 2001.</p><h2 id="2">Parameters</h2><pre class="codeinput">ntrials   = 10;     <span class="comment">% number of trials</span>
 nobs      = 1000;   <span class="comment">% number of observations per trial</span>
 nperms    = 100;    <span class="comment">% number of permutations for permutation test</span>
 bsize     = [];     <span class="comment">% permutation test block size: empty for automatic (uses model order)</span>
@@ -79,7 +81,7 @@ alpha     = 0.05;   <span class="comment">% significance level for all statistic
 mhtc      = <span class="string">'FDR'</span>;  <span class="comment">% multiple hypothesis test correction (see routine 'significance')</span>
 
 seed      = 0;      <span class="comment">% random seed (0 for unseeded)</span>
-</pre><h2>Generate VAR data<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Seed random number generator.</span>
+</pre><h2 id="3">Generate VAR data</h2><pre class="codeinput"><span class="comment">% Seed random number generator.</span>
 
 rng_seed(seed);
 
@@ -98,7 +100,7 @@ SIGT = eye(nvars);
 ptic(<span class="string">'\n*** var_to_tsdata... '</span>);
 X = var_to_tsdata(AT,SIGT,nobs,ntrials);
 ptoc;
-</pre><h2>VAR model estimation and autocovariance calculation<a name="4"></a></h2><pre class="codeinput">morder = size(AT,3); <span class="comment">% actual model order; on real data - i.e. with no generative model</span>
+</pre><h2 id="4">VAR model estimation and autocovariance calculation</h2><pre class="codeinput">morder = size(AT,3); <span class="comment">% actual model order; on real data - i.e. with no generative model</span>
                      <span class="comment">% available - use information criteria to estimate (see 'mvgc_demo')</span>
 
 <span class="comment">% Calculate VAR model</span>
@@ -123,7 +125,7 @@ ptoc;
 
 fprintf(<span class="string">'\nVAR check:\n'</span>); disp(res); <span class="comment">% report results...</span>
 assert(~res.error,<span class="string">'bad VAR'</span>);         <span class="comment">% ...and bail out if there are errors</span>
-</pre><h2>Granger causality estimation<a name="5"></a></h2><pre class="codeinput"><span class="comment">% Calculate time-domain pairwise conditional causalities.</span>
+</pre><h2 id="5">Granger causality estimation</h2><pre class="codeinput"><span class="comment">% Calculate time-domain pairwise conditional causalities.</span>
 
 ptic(<span class="string">'*** autocov_to_pwcgc... '</span>);
 F = autocov_to_pwcgc(G);
@@ -133,7 +135,7 @@ ptoc;
 
 pval_t = mvgc_pval(F,morder,nobs,ntrials,1,1,nvars-2,tstat);
 sig_t  = significance(pval_t,alpha,mhtc);
-</pre><h2>Permutation test<a name="6"></a></h2><pre class="codeinput">ptic(<span class="string">'\n*** tsdata_to_mvgc_pwc_permtest\n'</span>);
+</pre><h2 id="6">Permutation test</h2><pre class="codeinput">ptic(<span class="string">'\n*** tsdata_to_mvgc_pwc_permtest\n'</span>);
 FNULL = permtest_tsdata_to_pwcgc(X,morder,bsize,nperms,regmode,acmaxlags);
 ptoc(<span class="string">'*** tsdata_to_mvgc_pwc_permtest took '</span>,[],1);
 
@@ -143,7 +145,7 @@ ptoc(<span class="string">'*** tsdata_to_mvgc_pwc_permtest took '</span>,[],1);
 
 pval_p = empirical_pval(F,FNULL);
 sig_p  = significance(pval_p,alpha,mhtc);
-</pre><h2>Plot causalities, p-values, significance and cdfs<a name="7"></a></h2><pre class="codeinput">figure(1); clf;
+</pre><h2 id="7">Plot causalities, p-values, significance and cdfs</h2><pre class="codeinput">figure(1); clf;
 subplot(2,3,1);
 plot_pw(F);
 title(<span class="string">'Pairwise-conditional GC'</span>);
@@ -189,7 +191,7 @@ sig_ks = significance(pval_ks,alpha,mhtc); <span class="comment">% 1 = distribut
 
 fprintf(<span class="string">'\nKS-test p-values:\n\n'</span>); disp(pval_ks);
 fprintf(<span class="string">'KS significance test; ones indicates that permutation and theoretical\nnull distributions are significantly different at p-value %g; \n\n'</span>,alpha); disp(sig_ks);
-</pre><p><a href="mvgc_demo_permtest.html">back to top</a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+</pre><p><a href="mvgc_demo_permtest.html">back to top</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% MVGC permutation test demo
 %

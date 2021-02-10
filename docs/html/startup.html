@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>MVGC Toolbox "startup" script</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="startup.m"><style type="text/css">
+      --><title>MVGC Toolbox "startup" script</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-10"><meta name="DC.source" content="startup.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,12 +67,12 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>MVGC Toolbox "startup" script</h1><!--introduction--><p>Initialise MVGC Toolbox. This file is run automatically if Matlab is started in the toolbox root (installation) directory.</p><p>You may have to (or want to) customise this script for your computing environment.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Set toolbox version</a></li><li><a href="#2">Set path</a></li><li><a href="#3">Check <tt>mex</tt> files</a></li><li><a href="#4">Check for dependencies on other Matlab&reg; toolboxes</a></li><li><a href="#5">Initialise default random number stream</a></li><li><a href="#6">Enable all warnings</a></li></ul></div><h2>Set toolbox version<a name="1"></a></h2><pre class="codeinput"><span class="keyword">global</span> mvgc_version;
+  </style></head><body><div class="content"><h1>MVGC Toolbox "startup" script</h1><!--introduction--><p>Initialise MVGC Toolbox. This file is run automatically if Matlab is started in the toolbox root (installation) directory.</p><p>You may have to (or want to) customise this script for your computing environment.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Set toolbox version</a></li><li><a href="#2">Set path</a></li><li><a href="#3">Check <tt>mex</tt> files</a></li><li><a href="#4">Check for dependencies on other Matlab&reg; toolboxes</a></li><li><a href="#5">Initialise default random number stream</a></li><li><a href="#6">Enable all warnings</a></li></ul></div><h2 id="1">Set toolbox version</h2><pre class="codeinput"><span class="keyword">global</span> mvgc_version;
 mvgc_version.major = 1;
-mvgc_version.minor = 0;
+mvgc_version.minor = 2;
 
 fprintf(<span class="string">'[mvgc startup] Initialising MVGC toolbox version %d.%d\n'</span>, mvgc_version.major, mvgc_version.minor);
-</pre><h2>Set path<a name="2"></a></h2><pre class="codeinput"><span class="comment">% Add mvgc root directory and appropriate subdirectories to path</span>
+</pre><h2 id="2">Set path</h2><pre class="codeinput"><span class="comment">% Add mvgc root directory and appropriate subdirectories to path</span>
 
 <span class="keyword">global</span> mvgc_root;
 mvgc_root = fileparts(mfilename(<span class="string">'fullpath'</span>)); <span class="comment">% directory containing this file</span>
@@ -98,7 +100,7 @@ addpath(fullfile(mvgc_root,<span class="string">'docs'</span>)); <span class="co
 <span class="comment">% addpath(fullfile(mvgc_root,'maintainer'));</span>
 
 fprintf(<span class="string">'[mvgc startup] Added MVGC root directory %s and subdirectories to path\n'</span>,mvgc_root);
-</pre><h2>Check <tt>mex</tt> files<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Check for |mex| files and set flags appropriately</span>
+</pre><h2 id="3">Check <tt>mex</tt> files</h2><pre class="codeinput"><span class="comment">% Check for |mex| files and set flags appropriately</span>
 
 <span class="keyword">global</span> have_genvar_mex;
 have_genvar_mex = exist(<span class="string">'genvar_mex'</span>,<span class="string">'file'</span>) == 3;
@@ -108,7 +110,7 @@ have_genvar_mex = exist(<span class="string">'genvar_mex'</span>,<span class="st
 <span class="keyword">else</span>
     fprintf(<span class="string">'[mvgc startup] All MVGC ''mex'' files for your platform exist\n'</span>);
 <span class="keyword">end</span>
-</pre><h2>Check for dependencies on other Matlab&reg; toolboxes<a name="4"></a></h2><pre class="codeinput"><span class="comment">% Check if we have Statistics toolbox - see if ch2cdf is present</span>
+</pre><h2 id="4">Check for dependencies on other Matlab&reg; toolboxes</h2><pre class="codeinput"><span class="comment">% Check if we have Statistics toolbox - see if ch2cdf is present</span>
 
 <span class="keyword">if</span> fexists(@chi2cdf)
     fprintf(<span class="string">'[mvgc startup] Statistics Toolbox(TM) seems to be present.\n'</span>);
@@ -136,14 +138,14 @@ have_genvar_mex = exist(<span class="string">'genvar_mex'</span>,<span class="st
     fprintf(2,<span class="string">'[mvgc startup] WARNING: Control System Toolbox(TM) does not seem to be present.\n'</span>);
     fprintf(2,<span class="string">'[mvgc startup]          Will use slower scripted routines (see utils/control directory).\n'</span>);
 <span class="keyword">end</span>
-</pre><h2>Initialise default random number stream<a name="5"></a></h2><pre class="codeinput"><span class="comment">% Have we got global rng control? Otherwise we're in annoying legacy territory</span>
+</pre><h2 id="5">Initialise default random number stream</h2><pre class="codeinput"><span class="comment">% Have we got global rng control? Otherwise we're in annoying legacy territory</span>
 
 <span class="comment">% Initialise rng to avoid predictability of sessions</span>
 
 rng_seed(-1); <span class="comment">% seed from /dev/urandom (Unix/Mac) else from clock</span>
 
 fprintf(<span class="string">'[mvgc startup] Random number generator initialised\n'</span>);
-</pre><h2>Enable all warnings<a name="6"></a></h2><pre class="codeinput">warning <span class="string">on</span> <span class="string">all</span>
+</pre><h2 id="6">Enable all warnings</h2><pre class="codeinput">warning <span class="string">on</span> <span class="string">all</span>
 fprintf(<span class="string">'[mvgc startup] All warnings enabled\n'</span>);
 
 <span class="comment">% Done</span>
@@ -151,7 +153,7 @@ fprintf(<span class="string">'[mvgc startup] All warnings enabled\n'</span>);
 fprintf(<span class="string">'[mvgc startup] Initialisation complete (you may re-run ''startup'' at any time)\n'</span>);
 
 fprintf(<span class="string">'[mvgc startup] Type ''helpon'' to get started\n'</span>);
-</pre><p><a href="startup.html">back to top</a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+</pre><p><a href="startup.html">back to top</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% MVGC Toolbox "startup" script
 %
@@ -168,7 +170,7 @@ fprintf(<span class="string">'[mvgc startup] Type ''helpon'' to get started\n'</
 
 global mvgc_version;
 mvgc_version.major = 1;
-mvgc_version.minor = 0;
+mvgc_version.minor = 2;
 
 fprintf('[mvgc startup] Initialising MVGC toolbox version %d.%d\n', mvgc_version.major, mvgc_version.minor);
 

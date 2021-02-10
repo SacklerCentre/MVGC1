@@ -7,7 +7,7 @@
 %% Demonstration scripts
 %
 % * <mvgc_demo.html mvgc_demo>
-% * <mvgc_demo_autocov.html mvgc_demo_autocov>
+% * <mvgc_demo_statespace.html mvgc_demo_statespace>
 % * <mvgc_demo_bootstrap.html mvgc_demo_bootstrap>
 % * <mvgc_demo_GCCA.html mvgc_demo_GCCA>
 % * <mvgc_demo_nonstationary.html mvgc_demo_nonstationary>

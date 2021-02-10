@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>dlyap_aitr</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="dlyap_aitr.m"><style type="text/css">
+      --><title>dlyap_aitr</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-10"><meta name="DC.source" content="dlyap_aitr.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,11 +67,11 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>dlyap_aitr</h1><!--introduction--><p>Solve discrete-time Lyapunov equation by Smith's accelerated iterative method</p><p><a href="matlab:open('dlyap_itr.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   [X,iters] = dlyap_itr(A,Q,maxiters,maxrelerr)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   A          square matrix with spectral radius &lt; 1
+  </style></head><body><div class="content"><h1>dlyap_aitr</h1><!--introduction--><p>Solve discrete-time Lyapunov equation by Smith's accelerated iterative method</p><p><a href="matlab:open('dlyap_itr.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   [X,iters] = dlyap_itr(A,Q,maxiters,maxrelerr)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   A          square matrix with spectral radius &lt; 1
    Q          symmetric positive-definite matrix
    maxiters   maximum iterations (default: 100)
    maxrelerr  maximum relative error (default: 1e-8)</pre><p><i>output</i></p><pre>   X          solution of discrete-time Lyapunov equation X = A*X*A'+Q
-   iters      number of iterations performed</pre><h2>Description<a name="3"></a></h2><p>Solves the discrete-time Lyapunov equation (<i>cf.</i> <a href="matlab:doc('dlyap')">dlyap</a> in the Matlab Control System Toolbox)</p><p><img vspace="5" hspace="24" src="eq_dlyap.png" alt=""> </p><p>using Smith's accelerated iterative method [1]:</p><p><img vspace="5" hspace="24" src="eq_aitr.png" alt=""> </p><p><tt>maxiters</tt> is the maximum iterations, <tt>maxrelerr</tt> the maximum relative error of <img valign="middle" src="ii_dlyapre.png"> with respect to <tt>Q</tt> before a convergence test kicks in. The actual number of iterations performed is returned in <tt>iters</tt>. If the algorithm fails to converge within <tt>maxiters</tt> iterations, an exception <tt>MVGC:XMaxItrs</tt> is thrown (this is for consistency with <a href="matlab:doc('dlyap')">dlyap</a>). The convergence rate depends on the problem dimensions and maximum absolute eigenvalue (spectral radius) of <tt>A</tt>. In general this algorithm actually appears to be faster than the Matlab Control System Toolbox <a href="matlab:doc('dlyap')">dlyap</a>.</p><p>The caller should test that <tt>Q</tt> is positive-definite and that the spectral radius of <tt>A</tt> is <tt>&lt; 1</tt> before calling.</p><h2>References<a name="4"></a></h2><p>[1] R. A. Smith, "Matrix Equation XA + BX = C", <i>SIAM J. Appl. Math.</i> 16(1), 1968.</p><h2>See also<a name="5"></a></h2><p><a href="matlab:doc('dlyap')">dlyap</a> | <a href="dlyap_schur.html"><tt>dlyap_schur</tt></a> | <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   iters      number of iterations performed</pre><h2 id="3">Description</h2><p>Solves the discrete-time Lyapunov equation (<i>cf.</i> <a href="matlab:doc('dlyap')">dlyap</a> in the Matlab Control System Toolbox)</p><p><img vspace="5" hspace="24" src="eq_dlyap.png" alt=""> </p><p>using Smith's accelerated iterative method [1]:</p><p><img vspace="5" hspace="24" src="eq_aitr.png" alt=""> </p><p><tt>maxiters</tt> is the maximum iterations, <tt>maxrelerr</tt> the maximum relative error of <img valign="middle" src="ii_dlyapre.png"> with respect to <tt>Q</tt> before a convergence test kicks in. The actual number of iterations performed is returned in <tt>iters</tt>. If the algorithm fails to converge within <tt>maxiters</tt> iterations, an exception <tt>MVGC:XMaxItrs</tt> is thrown (this is for consistency with <a href="matlab:doc('dlyap')">dlyap</a>). The convergence rate depends on the problem dimensions and maximum absolute eigenvalue (spectral radius) of <tt>A</tt>. In general this algorithm actually appears to be faster than the Matlab Control System Toolbox <a href="matlab:doc('dlyap')">dlyap</a>.</p><p>The caller should test that <tt>Q</tt> is positive-definite and that the spectral radius of <tt>A</tt> is <tt>&lt; 1</tt> before calling.</p><h2 id="4">References</h2><p>[1] R. A. Smith, "Matrix Equation XA + BX = C", <i>SIAM J. Appl. Math.</i> 16(1), 1968.</p><h2 id="5">See also</h2><p><a href="matlab:doc('dlyap')">dlyap</a> | <a href="dlyap_schur.html"><tt>dlyap_schur</tt></a> | <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% dlyap_aitr
 %

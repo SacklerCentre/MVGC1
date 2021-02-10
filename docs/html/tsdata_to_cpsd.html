@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>tsdata_to_cpsd</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="tsdata_to_cpsd.m"><style type="text/css">
+      --><title>tsdata_to_cpsd</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-10"><meta name="DC.source" content="tsdata_to_cpsd.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,13 +67,13 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>tsdata_to_cpsd</h1><!--introduction--><p>Estimate cross-power spectral density from time series data</p><p><a href="matlab:open('tsdata_to_cpsd.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   S = tsdata_to_cpsd(X,fres,method,window,noverlap,nw,ntapers)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   X          multi-trial time series data
+  </style></head><body><div class="content"><h1>tsdata_to_cpsd</h1><!--introduction--><p>Estimate cross-power spectral density from time series data</p><p><a href="matlab:open('tsdata_to_cpsd.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   S = tsdata_to_cpsd(X,fres,method,window,noverlap,nw,ntapers)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   X          multi-trial time series data
    fres       frequency resolution
    method     estimation method: 'WELCH' (default) or 'MT'
    window     window length (default: min time series trial length and 2*fres)
    noverlap   window overlap size (default: window/2)
    nw         [multi-taper only] multi-taper time bandwidth parameter (default: 3)
-   ntapers    [multi-taper only] number of tapers (default: 2*nw-1)</pre><p><i>output</i></p><pre>   S          estimated cross-power spectral density (cpsd) matrix</pre><h2>Description<a name="3"></a></h2><p>Returns an estimate of the cross-power spectral density of a multivariate process from time series data <tt>X</tt>, which may be single- or multi-trial. <tt>fres</tt> specifies the frequency resolution; call <tt>freqs = <a href="sfreqs.html">sfreqs</a>(fres,fs)</tt>, where <tt>fs</tt> is the sampling rate, to get a corresponding vector <tt>freqs</tt> of frequencies on <tt>[0,fs/2]</tt>.</p><p>NOTE: This function requires the Matlab&reg; Signal Processing Toolbox&#8482;.</p><p>The <tt>window</tt> and <tt>noverlap</tt> parameters specify the window length and window overlap size, respectively. The estimation <tt>method</tt> may be <tt>'WELCH'</tt> for Welch's averaged modified periodogram method (default: see functions <a href="matlab:doc('pwelch')"><tt>pwelch</tt></a>, <a href="matlab:doc('cpsd')"><tt>cpsd</tt></a> in the Matlab&reg; Signal Processing Toolbox&#8482;) or <tt>'MT'</tt> for a multi-taper estimation procedure. For the multi-taper method, <tt>nw</tt> is the multi-taper time bandwidth parameter and <tt>ntaper</tt> the number of tapers. Discrete prolate spheroidal (Slepian) sequences for the multi-taper method are calculated using the function <a href="matlab:doc('dpss')"><tt>dpss</tt></a> from the Matlab&reg; Signal Processing Toolbox&#8482;.</p><p>Multi-taper routine adapted from <a href="http://www.chronux.org/"><tt>Chronux</tt></a> code [2] authored by <a href="http://mitralab.org/">Partha Mitra</a> and Kenneth D. Harris.</p><h2>References<a name="4"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] P. Mitra and H. Bokil, "Observed Brain Dynamics", <i>Oxford University Press</i>, New York, 2008.</p><h2>See also<a name="5"></a></h2><p><a href="matlab:doc('pwelch')"><tt>pwelch</tt></a> | <a href="matlab:doc('cpsd')"><tt>cpsd</tt></a> | <a href="matlab:doc('dpss')"><tt>dpss</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   ntapers    [multi-taper only] number of tapers (default: 2*nw-1)</pre><p><i>output</i></p><pre>   S          estimated cross-power spectral density (cpsd) matrix</pre><h2 id="3">Description</h2><p>Returns an estimate of the cross-power spectral density of a multivariate process from time series data <tt>X</tt>, which may be single- or multi-trial. <tt>fres</tt> specifies the frequency resolution; call <tt>freqs = <a href="sfreqs.html">sfreqs</a>(fres,fs)</tt>, where <tt>fs</tt> is the sampling rate, to get a corresponding vector <tt>freqs</tt> of frequencies on <tt>[0,fs/2]</tt>.</p><p>NOTE: This function requires the Matlab&reg; Signal Processing Toolbox&#8482;.</p><p>The <tt>window</tt> and <tt>noverlap</tt> parameters specify the window length and window overlap size, respectively. The estimation <tt>method</tt> may be <tt>'WELCH'</tt> for Welch's averaged modified periodogram method (default: see functions <a href="matlab:doc('pwelch')"><tt>pwelch</tt></a>, <a href="matlab:doc('cpsd')"><tt>cpsd</tt></a> in the Matlab&reg; Signal Processing Toolbox&#8482;) or <tt>'MT'</tt> for a multi-taper estimation procedure. For the multi-taper method, <tt>nw</tt> is the multi-taper time bandwidth parameter and <tt>ntaper</tt> the number of tapers. Discrete prolate spheroidal (Slepian) sequences for the multi-taper method are calculated using the function <a href="matlab:doc('dpss')"><tt>dpss</tt></a> from the Matlab&reg; Signal Processing Toolbox&#8482;.</p><p>Multi-taper routine adapted from <a href="http://www.chronux.org/"><tt>Chronux</tt></a> code [2] authored by <a href="http://mitralab.org/">Partha Mitra</a> and Kenneth D. Harris.</p><h2 id="4">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] P. Mitra and H. Bokil, "Observed Brain Dynamics", <i>Oxford University Press</i>, New York, 2008.</p><h2 id="5">See also</h2><p><a href="matlab:doc('pwelch')"><tt>pwelch</tt></a> | <a href="matlab:doc('cpsd')"><tt>cpsd</tt></a> | <a href="matlab:doc('dpss')"><tt>dpss</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% tsdata_to_cpsd
 %
