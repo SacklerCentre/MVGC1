@@ -3,7 +3,7 @@ hosted at http://www.sussex.ac.uk/sackler/mvgc
 
 Current version is mvgc_v1.2, last updated Feb. 2021
 
-**NOTE**: Default computational method in this version changed to state-space; see
+**NOTE**: Default computational method in this version changed to state-space; see:
 
     L. Barnett and A. K. Seth, Granger causality for state-space models,
     Phys. Rev. E 91(4) Rapid Communication, 2015.
@@ -13,8 +13,8 @@ University of Sussex, UK, provides MATLAB routines for efficient and accurate
 estimation and statistical inference of multivariate Granger causality from
 time-series data, as described in:
 
-Lionel Barnett and Anil K. Seth, "The MVGC Multivariate Granger Causality Toolbox:
-A new approach to Granger-causal inference", J. Neurosci. Methods 223 (2014), pp 50-68.
+    L. Barnett and A. K. Seth, "The MVGC Multivariate Granger Causality Toolbox: A new
+    approach to Granger-causal inference", J. Neurosci. Methods 223, pp 50-68, 2014.
 
 For general support issues, comments, questions, bug reports and suggested enhancements,
 please email mvgctoolbox@sussex.ac.uk. We would especially like to know if you have
