@@ -1,21 +1,18 @@
 %% MVGC demo
 %
+% *_Note_*: This demo demonstrates basic usage of the MVGC toolbox using the
+% state-space method introduced in [4]. We recommend this approach as default,
+% since it is in general faster and potentially more accurate. For the previous
+% autocovariance-based method, see <mvgc_demo_autovov.html |mvgc_demo_autovov|>.
+%
 % Demonstrates typical usage of the MVGC toolbox on generated VAR data for a
 % 5-node network with known causal structure (see <var5_test.html |var5_test|>).
 % Estimates a VAR model and calculates time- and frequency-domain
 % pairwise-conditional Granger causalities (also known as the "causal graph").
-% Also calculates Seth's causal density measure [2].
 %
 % This script is a good starting point for learning the MVGC approach to
 % Granger-causal estimation and statistical inference. It may serve as a useful
-% template for your own code. The computational approach demonstrated here will
-% make a lot more sense alongside the reference document> [1], which we
-% _strongly recommend_ you consult, particularly Section 3 on design principles
-% of the toolbox. You might also like to refer to the <mvgc_schema.html schema>
-% of MVGC computational pathways - <mvgc_schema.html#3 algorithms> |A<n>| in
-% this demo refer to the algorithm labels listed there - and the
-% <mvgchelp.html#4 Common variable names and data structures> section of the
-% Help documentation.
+% template for your own code.
 %
 % *_FAQ:_* _Why do the spectral causalities look so smooth?_
 %
@@ -50,6 +47,10 @@
 % filtering: Theoretical invariance and practical application", _J. Neurosci.
 % Methods_ 201(2), 2011.
 %
+% [4] L. Barnett and A. K. Seth, "Granger causality for state-space models",
+% _Phys. Rev. E 91(4) Rapid Communication_, 2015
+% [ <matlab:open('ssgc_preprint.pdf') preprint> ].
+%
 % (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
 % installation directory for licensing terms.
 %
@@ -66,9 +67,9 @@ momax     = 20;     % maximum model order for model order estimation
 
 acmaxlags = 1000;   % maximum autocovariance lags (empty for automatic calculation)
 
-tstat     = '';     % statistical test for MVGC:  'F' for Granger's F-test (default) or 'chi2' for Geweke's chi2 test
+tstat     = 'F';    % statistical test for MVGC:  'F' for Granger's F-test (default) or 'chi2' for Geweke's chi2 test
 alpha     = 0.05;   % significance level for significance test
-mhtc      = 'FDR';  % multiple hypothesis test correction (see routine 'significance')
+mhtc      = 'FDRD'; % multiple hypothesis test correction (see routine 'significance')
 
 fs        = 200;    % sample rate (Hz)
 fres      = [];     % frequency resolution (empty for automatic calculation)
@@ -142,12 +143,8 @@ end
 
 ptic('\n*** tsdata_to_var... ');
 [A,SIG] = tsdata_to_var(X,morder,regmode);
+assert(~isbad(A),'VAR estimation failed - bailing out');
 ptoc;
-
-% Check for failed regression
-
-assert(~isbad(A),'VAR estimation failed');
-
 
 % Report information on the estimated VAR, and check for errors.
 %
@@ -161,27 +158,26 @@ assert(~isbad(A),'VAR estimation failed');
 info = var_info(A,SIG);
 assert(~info.error,'VAR error(s) found - bailing out');
 
-% NOTE: at this point we have a model and are finished with the data! - all
-% subsequent calculations work from the estimated VAR parameters A and SIG.
-
 %% Granger causality calculation: time domain  (<mvgc_schema.html#3 |A13|>)
 
 % Calculate time-domain pairwise-conditional causalities from VAR model parameters
-% by state-space method.
+% by state-space method [4]. The VAR model is transformed into an equivalent state-
+% space model for computation. Also return p-values for specified test (F-test or
+% likelihood-ratio test; this is optional - if p-values are not required, then it
+% is not necessary to supply time series |X|, regression mode |regmode|, or test
+% specification |tstat|).
 
 ptic('*** var_to_pwcgc... ');
-F = var_to_pwcgc(A,SIG);
+[F,pval] = var_to_pwcgc(A,SIG,X,regmode,tstat);
 ptoc;
 
 % Check for failed GC calculation
 
-assert(~isbad(F,false),'GC calculation failed');
+assert(~isbad(F,false),'GC calculation failed - bailing out');
 
-% Significance test using theoretical null distribution, adjusting for multiple
-% hypotheses.
+% Significance-test p-values, correcting for multiple hypotheses.
 
-pval = mvgc_pval(F,morder,nobs,ntrials,1,1,nvars-2,tstat); % take careful note of arguments!
-sig  = significance(pval,alpha,mhtc);
+sig = significance(pval,alpha,mhtc);
 
 % Plot time-domain causal graph, p-values and significance.
 
@@ -191,30 +187,22 @@ plot_pw(F);
 title('Pairwise-conditional GC');
 subplot(1,3,2);
 plot_pw(pval);
-title('p-values');
+title(['p-values (' tstat '-test)']);
 subplot(1,3,3);
 plot_pw(sig);
-title(['Significant at p = ' num2str(alpha)])
-
-% For good measure we calculate Seth's causal density (cd) measure - the mean
-% pairwise-conditional causality. We don't have a theoretical sampling
-% distribution for this.
-
-cd = mean(F(~isnan(F)));
-
-fprintf('\ncausal density = %f\n',cd);
+title(['Significant at \alpha = ' num2str(alpha)]);
 
 %% Granger causality calculation: frequency domain  (<mvgc_schema.html#3 |A14|>)
 
-% Calculate spectral pairwise-conditional causalities resolution from VAR model
-% parameters. If not specified, we set the frequency resolution to something
-% sensible. Warn if resolution is very large, as this may cause problems.
+% If not specified, we set the frequency resolution to something sensible. Warn if
+% resolution is very large, as this may lead to excessively long computation times,
+% and/or out-of-memory issues.
 
 if isempty(fres)
-    fres = 2^nextpow2(info.acdec); % alternatively, fres = 2^nextpow2(nobs);
-	fprintf('\nFrequency resolution auto-calculated as %d\n',fres);
+    fres = 2^nextpow2(info.acdec); % based on autocorrelation decay; alternatively, you could try fres = 2^nextpow2(nobs);
+	fprintf('\nfrequency resolution auto-calculated as %d (increments ~ %.2gHz)\n',fres,fs/2/fres);
 end
-if fres > 10000 % adjust to taste
+if fres > 20000 % adjust to taste
 	fprintf(2,'\nWARNING: large frequency resolution = %d - may cause computation time/memory usage problems\nAre you sure you wish to continue [y/n]? ',fres);
 	istr = input(' ','s'); if isempty(istr) || ~strcmpi(istr,'y'); fprintf(2,'Aborting...\n'); return; end
 end
@@ -224,12 +212,8 @@ end
 
 ptic(sprintf('\n*** var_to_spwcgc... ',fres));
 f = var_to_spwcgc(A,SIG,fres);
+assert(~isbad(f,false),'spectral GC calculation failed - bailing out');
 ptoc;
-assert(~isbad(f,false),'spectral GC estimation failed');
-
-% Check for failed spectral GC calculation
-
-assert(~isbad(f,false),'spectral GC calculation failed');
 
 % Plot spectral causal graph.
 
@@ -241,14 +225,13 @@ plot_spw(f,fs);
 % Check that spectral causalities average (integrate) to time-domain
 % causalities, as they should according to theory.
 
-fprintf('\nchecking that frequency-domain GC integrates to time-domain GC... \n');
+fprintf('\nfrequency-domain GC integration test... ');
 Fint = smvgc_to_mvgc(f); % integrate spectral MVGCs
 mad = maxabs(F-Fint);
-madthreshold = 1e-5;
-if mad < madthreshold
-    fprintf('maximum absolute difference OK: = %.2e (< %.2e)\n',mad,madthreshold);
+if mad < 1e-5
+    fprintf('OK (maximum absolute difference ~ %.0e)\n',mad);
 else
-    fprintf(2,'WARNING: high maximum absolute difference = %e.2 (> %.2e)\n',mad,madthreshold);
+    fprintf(2,'WARNING: high maximum absolute difference ~ %.0e\n',mad);
 end
 
 %%

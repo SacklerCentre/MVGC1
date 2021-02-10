@@ -55,21 +55,21 @@ if report == 1 % print out report
 
     fprintf('\nVAR info:\n');
 
-    fprintf('    observables       = %d\n',info.observ);
+    fprintf('    variables         = %d\n',info.observ);
 
     fprintf('    model order       = %d\n',info.morder);
 
     fprintf('    AR spectral norm  = %.4f',info.rho);
     if      bitget(info.error,1), fprintf(2,'    ERROR: unstable (explosive)\n');
     elseif  bitget(info.error,2), fprintf(2,'    ERROR: unstable (unit root)\n');
-    else    fprintf('      stable (autocorrelation decay ~ %d)\n',info.acdec);
+    else    fprintf('    stable (autocorrelation decay ~ %d)\n',info.acdec);
     end
 
     fprintf('    residuals covariance matrix');
     if     bitget(info.error,5), fprintf(2,'     ERROR: not symmetric\n');
     elseif bitget(info.error,6), fprintf(2,'     ERROR: not positive definite\n');
     elseif bitget(info.error,7), fprintf(2,'     ERROR: multi-information negative\n');
-    else   fprintf('     symmetric, pos. def. (mii = %.4f, uniform = %.4f)\n',info.mii,info.umii);
+    else   fprintf('   symmetric, pos. def. (mii = %.4f, uniform = %.4f)\n',info.mii,info.umii);
     end
 
     fprintf('\n');
