@@ -3,10 +3,13 @@ hosted at http://www.sussex.ac.uk/sackler/mvgc
 
 Current version is mvgc_v1.2, last updated Feb. 2021
 
-**NOTE**: Default computational method in this version changed to state-space; see:
+**NOTE**: this version includes an implementation of the new, more efficient and accurate
+state-space method for GC calculation, as detailed in:
 
     L. Barnett and A. K. Seth, Granger causality for state-space models,
     Phys. Rev. E 91(4) Rapid Communication, 2015.
+
+See the file: *mvgc_demo_statespace.m* in the *demo* subdirectory.
 
 This toolbox, developed at the Sackler Centre for Consciousness Science,
 University of Sussex, UK, provides MATLAB routines for efficient and accurate
