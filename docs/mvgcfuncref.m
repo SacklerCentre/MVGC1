@@ -121,6 +121,7 @@
 % * <rng_seed.html rng_seed>
 % * <secs2hms.html secs2hms>
 % * <sfreqs.html sfreqs>
+% * <sgtitlex.html sgtitlex>
 % * <ss2iss.html ss2iss>
 % * <ss2itrfun.html ss2itrfun>
 % * <timestr.html timestr>

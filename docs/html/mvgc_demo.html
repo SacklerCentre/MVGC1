@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>MVGC demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-10"><meta name="DC.source" content="mvgc_demo.m"><style type="text/css">
+      --><title>MVGC demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="mvgc_demo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -185,6 +185,7 @@ sig  = significance(pval,alpha,mhtc);
 <span class="comment">% Plot time-domain causal graph, p-values and significance.</span>
 
 figure(2); clf;
+sgtitlex(<span class="string">'Pairwise-conditional Granger causality - time domain'</span>);
 subplot(1,3,1);
 plot_pw(F);
 title(<span class="string">'Pairwise-conditional GC'</span>);
@@ -216,18 +217,20 @@ assert(~isbad(f,false),<span class="string">'spectral GC calculation failed'</sp
 <span class="comment">% Plot spectral causal graph.</span>
 
 figure(3); clf;
+sgtitlex(<span class="string">'Pairwise-conditional Granger causality - frequency domain'</span>);
 plot_spw(f,fs);
 </pre><h2 id="9">Granger causality calculation: frequency domain -&gt; time-domain  (<a href="mvgc_schema.html#3"><tt>A15</tt></a>)</h2><pre class="codeinput"><span class="comment">% Check that spectral causalities average (integrate) to time-domain</span>
 <span class="comment">% causalities, as they should according to theory.</span>
 
-fprintf(<span class="string">'\nchecking that frequency-domain GC integrates to time-domain GC... \n'</span>);
+fprintf(<span class="string">'\nfrequency-domain GC integration check... '</span>);
 Fint = smvgc_to_mvgc(f); <span class="comment">% integrate spectral MVGCs</span>
-mad = maxabs(F-Fint);
-madthreshold = 1e-5;
-<span class="keyword">if</span> mad &lt; madthreshold
-    fprintf(<span class="string">'maximum absolute difference OK: = %.2e (&lt; %.2e)\n'</span>,mad,madthreshold);
+amax = maxabs(F+Fint)/2;
+<span class="keyword">if</span> amax &lt; 1e-5; amax = 1; <span class="keyword">end</span> <span class="comment">% in case all GCs very small</span>
+mre = maxabs(F-Fint)/amax;
+<span class="keyword">if</span> mre &lt; 1e-5
+    fprintf(<span class="string">'OK (maximum relative error ~ %.0e)\n'</span>,mre);
 <span class="keyword">else</span>
-    fprintf(2,<span class="string">'WARNING: high maximum absolute difference = %e.2 (&gt; %.2e)\n'</span>,mad,madthreshold);
+    fprintf(2,<span class="string">'WARNING: high maximum relative error ~ %.0e\n'</span>,mre);
 <span class="keyword">end</span>
 </pre><p><a href="mvgc_demo.html">back to top</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
@@ -428,6 +431,7 @@ sig  = significance(pval,alpha,mhtc);
 % Plot time-domain causal graph, p-values and significance.
 
 figure(2); clf;
+sgtitlex('Pairwise-conditional Granger causality - time domain');
 subplot(1,3,1);
 plot_pw(F);
 title('Pairwise-conditional GC');
@@ -462,6 +466,7 @@ assert(~isbad(f,false),'spectral GC calculation failed');
 % Plot spectral causal graph.
 
 figure(3); clf;
+sgtitlex('Pairwise-conditional Granger causality - frequency domain');
 plot_spw(f,fs);
 
 %% Granger causality calculation: frequency domain -> time-domain  (<mvgc_schema.html#3 |A15|>)
@@ -469,14 +474,15 @@ plot_spw(f,fs);
 % Check that spectral causalities average (integrate) to time-domain
 % causalities, as they should according to theory.
 
-fprintf('\nchecking that frequency-domain GC integrates to time-domain GC... \n');
+fprintf('\nfrequency-domain GC integration check... ');
 Fint = smvgc_to_mvgc(f); % integrate spectral MVGCs
-mad = maxabs(F-Fint);
-madthreshold = 1e-5;
-if mad < madthreshold
-    fprintf('maximum absolute difference OK: = %.2e (< %.2e)\n',mad,madthreshold);
+amax = maxabs(F+Fint)/2;
+if amax < 1e-5; amax = 1; end % in case all GCs very small
+mre = maxabs(F-Fint)/amax;
+if mre < 1e-5
+    fprintf('OK (maximum relative error ~ %.0e)\n',mre);
 else
-    fprintf(2,'WARNING: high maximum absolute difference = %e.2 (> %.2e)\n',mad,madthreshold);
+    fprintf(2,'WARNING: high maximum relative error ~ %.0e\n',mre);
 end
 
 %%

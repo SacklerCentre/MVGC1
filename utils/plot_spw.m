@@ -69,7 +69,7 @@ for i = 1:n
             xlim(xlims);
             ylim(ylims);
             xlabel(xlab);
-            ylabel(sprintf('%d -> %d',j,i));
+            title(sprintf('\n%d -> %d',j,i));
         end
     end
 end

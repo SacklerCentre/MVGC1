@@ -182,6 +182,7 @@ sig = significance(pval,alpha,mhtc);
 % Plot time-domain causal graph, p-values and significance.
 
 figure(2); clf;
+sgtitlex('Pairwise-conditional Granger causality - time domain');
 subplot(1,3,1);
 plot_pw(F);
 title('Pairwise-conditional GC');
@@ -210,7 +211,7 @@ end
 % Calculate spectral pairwise-conditional causalities at given frequency
 % resolution by state-space method.
 
-ptic(sprintf('\n*** var_to_spwcgc... ',fres));
+ptic('\n*** var_to_spwcgc... ');
 f = var_to_spwcgc(A,SIG,fres);
 assert(~isbad(f,false),'spectral GC calculation failed - bailing out');
 ptoc;
@@ -218,6 +219,7 @@ ptoc;
 % Plot spectral causal graph.
 
 figure(3); clf;
+sgtitlex('Pairwise-conditional Granger causality - frequency domain');
 plot_spw(f,fs);
 
 %% Granger causality calculation: frequency domain -> time-domain  (<mvgc_schema.html#3 |A15|>)
