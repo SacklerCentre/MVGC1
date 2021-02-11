@@ -1,7 +1,7 @@
 %% MVGC demo
 %
-% See also demo using new, more efficient state-space method:
-% <mvgc_demo_statespace.html |mvgc_demo_statespace|>.
+% *See also demo using new, more efficient state-space method:
+% <mvgc_demo_statespace.html |mvgc_demo_statespace|>.*
 %
 % Demonstrates typical usage of the MVGC toolbox on generated VAR data for a
 % 5-node network with known causal structure (see <var5_test.html |var5_test|>).

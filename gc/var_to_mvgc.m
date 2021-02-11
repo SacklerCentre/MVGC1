@@ -1,3 +1,76 @@
+%% var_to_mvgc
+%
+% Calculate conditional time-domain MVGC (multivariate Granger causality)
+%
+% <matlab:open('var_to_mvgc.m') code>
+%
+%% Syntax
+%
+%     F = autocov_to_mvgc(G,x,y)
+%
+%% Arguments
+%
+% See also <mvgchelp.html#4 Common variable names and data structures>.
+%
+% _input_
+%
+%     A          VAR coefficients matrix
+%     SIG        residuals covariance matrix
+%     x          vector of indices of target (causee) multi-variable
+%     y          vector of indices of source (causal) multi-variable
+%     X          multi-trial time series data
+%     regmode    regression mode: 'LWR' or 'OLS'
+%     tstat      statistical inference test: 'F' for F-test, or 'LR' for likelihood-ratio (chi^2) test
+%
+% _output_
+%
+%     F          Granger causality
+%     pval       p-value for specified statistical test
+%
+%% Description
+%
+% Returns the time-domain MVGC
+%
+% <<eq_mvgc.png>>
+%
+% from the variable |Y| (specified by the vector of indices |y|) to the
+% variable |X| (specified by the vector of indices |x|), conditional on all
+% other variables |Z| represented in |A| and |SIG|, for a stationary VAR process
+% with VAR coefficients matrix |A| and residuals covariance matrix |SIG| - see
+% ref. [1].
+%
+% The algorithm first converts the VAR parameters to state-space innovations form
+% (see <var2riss.html |var2riss|>) then applies the method detailed in ref. [2]
+% to calculate Granger causality |F| from the state-space parameters.
+%
+% If the return value |pval| is specified, then p-values are calculated for the
+% null hypothesis of zero Granger causality according to an F- or chi^2 test. In
+% this case, the parameters |X|, |regmode| and |tstat| must be supplied.
+%
+% The caller should take note of any warnings issued by this function and test
+% results with a call <isbad.html |isbad|> (|F|, |false|).
+%
+%% References
+%
+% [1] L. Barnett and A. K. Seth,
+% <http://www.sciencedirect.com/science/article/pii/S0165027013003701 The MVGC
+%     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal
+% Inference>, _J. Neurosci. Methods_ 223, 2014
+% [ <matlab:open('mvgc_preprint.pdf') preprint> ].
+%
+% [2] L. Barnett and A. K. Seth, "Granger causality for state-space models",
+% _Phys. Rev. E 91(4) Rapid Communication_, 2015
+% [ <matlab:open('ssgc_preprint.pdf') preprint> ].
+%
+%% See also
+%
+% <var2riss.html |var2riss|> |
+% <isbad.html |isbad|>
+%
+% (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
+% installation directory for licensing terms.
+%
+%%
 function [F,pval] = var_to_mvgc(A,SIG,x,y,X,regmode,tstat)
 
 [n,n1,p] = size(A);
@@ -13,7 +86,7 @@ assert(all(x >=1 & x <= n),'Some x indices out of range');
 assert(all(y >=1 & y <= n),'Some y indices out of range');
 
 z  = 1:n; z([x y]) = []; % indices of other variables (to condition out)
-xz = [x z];               % indices of variables in reduced model (omit source variables)
+xz = [x z];              % indices of variables in reduced model (omit source variables)
 
 nx = length(x);
 ny = length(y);
