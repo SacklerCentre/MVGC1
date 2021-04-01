@@ -6,7 +6,7 @@
 %
 %% Syntax
 %
-%     F = autocov_to_mvgc(G,x,y)
+%     [F,pval] = var_to_mvgc(A,SIG,x,y,X,regmode,tstat)
 %
 %% Arguments
 %
