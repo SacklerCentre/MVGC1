@@ -105,7 +105,7 @@ if nargout > 1 % calculate stats
 	assert(n1 == n,    'Time series does not match VAR coefficients matrix');
 	M  = N*(m-p); % effective number of observations
 	d  = p*nx*ny; % degrees of freedom
-	[~,VR]  = tsdata_to_var(X(r,:,:),p,regmode);  % reduced regression
+	[~,VR]  = tsdata_to_var(X(xz,:,:),p,regmode);  % reduced regression
 	if     strcmpi(tstat,'F')  % F-test
 		d2 = nx*(M-p*n)-1; % F df2
 		K  = d2/d;         % F scaling factor
