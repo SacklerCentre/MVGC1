@@ -109,10 +109,10 @@ if nargout > 1 % calculate stats
 	if     strcmpi(tstat,'F')  % F-test
 		d2 = nx*(M-p*n)-1; % F df2
 		K  = d2/d;         % F scaling factor
-		stat  = trace(VR(xr,xr))/trace(V(x,x)) - 1; % F-test statistic
+		stat  = trace(SIGR(xr,xr))/trace(SIG(x,x)) - 1; % F-test statistic
 		pval = 1-fcdf(K*stat,d,d2);
 	elseif strcmpi(tstat,'LR') % Likelihood-ratio test
-		stat = logdet(VR(xr,xr)) - logdet(V(x,x)); % likelihood-ratio test statistic
+		stat = logdet(SIGR(xr,xr)) - logdet(SIG(x,x)); % likelihood-ratio test statistic
 		pval = 1-chi2cdf(M*stat,d);
 	else
 		error('Unknown statistical test');
