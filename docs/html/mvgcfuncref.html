@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>MVGC Multivariate Granger Causality Toolbox - Function Reference</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="mvgcfuncref.m"><style type="text/css">
+      --><title>MVGC Multivariate Granger Causality Toolbox - Function Reference</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="mvgcfuncref.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>MVGC Multivariate Granger Causality Toolbox - Function Reference</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Toolbox initialisation</a></li><li><a href="#2">Demonstration scripts</a></li><li><a href="#3">Core functionality</a></li><li><a href="#4">Granger causality</a></li><li><a href="#5">Granger causality: GCCA compatibility</a></li><li><a href="#6">Granger causality: subsampling</a></li><li><a href="#7">Statistics</a></li><li><a href="#8">Utilities</a></li><li><a href="#9">Experimental</a></li></ul></div><h2>Toolbox initialisation<a name="1"></a></h2><div><ul><li><a href="startup.html">startup</a></li></ul></div><h2>Demonstration scripts<a name="2"></a></h2><div><ul><li><a href="mvgc_demo.html">mvgc_demo</a></li><li><a href="mvgc_demo_bootstrap.html">mvgc_demo_bootstrap</a></li><li><a href="mvgc_demo_GCCA.html">mvgc_demo_GCCA</a></li><li><a href="mvgc_demo_nonstationary.html">mvgc_demo_nonstationary</a></li><li><a href="mvgc_demo_permtest.html">mvgc_demo_permtest</a></li><li><a href="mvgc_demo_stats.html">mvgc_demo_stats</a></li><li><a href="var5_test.html">var5_test</a></li><li><a href="var9_test.html">var9_test</a></li></ul></div><h2>Core functionality<a name="3"></a></h2><div><ul><li><a href="autocov_to_cpsd.html">autocov_to_cpsd</a></li><li><a href="autocov_to_var.html">autocov_to_var</a></li><li><a href="autocov_xform.html">autocov_xform</a></li><li><a href="cpsd_to_autocov.html">cpsd_to_autocov</a></li><li><a href="cpsd_to_var.html">cpsd_to_var</a></li><li><a href="cpsd_xform.html">cpsd_xform</a></li><li><a href="tsdata_to_autocov.html">tsdata_to_autocov</a></li><li><a href="tsdata_to_cpsd.html">tsdata_to_cpsd</a></li><li><a href="tsdata_to_infocrit.html">tsdata_to_infocrit</a></li><li><a href="tsdata_to_var.html">tsdata_to_var</a></li><li><a href="var_to_autocov.html">var_to_autocov</a></li><li><a href="var_to_cpsd.html">var_to_cpsd</a></li><li><a href="var_to_tsdata.html">var_to_tsdata</a></li><li><a href="var_to_tsdata_nonstat.html">var_to_tsdata_nonstat</a></li></ul></div><h2>Granger causality<a name="4"></a></h2><div><ul><li><a href="autocov_to_mvgc.html">autocov_to_mvgc</a></li><li><a href="autocov_to_pwcgc.html">autocov_to_pwcgc</a></li><li><a href="autocov_to_smvgc.html">autocov_to_smvgc</a></li><li><a href="autocov_to_spwcgc.html">autocov_to_spwcgc</a></li><li><a href="smvgc_to_mvgc.html">smvgc_to_mvgc</a></li></ul></div><h2>Granger causality: GCCA compatibility<a name="5"></a></h2><div><ul><li><a href="GCCA_tsdata_to_mvgc.html">GCCA_tsdata_to_mvgc</a></li><li><a href="GCCA_tsdata_to_pwcgc.html">GCCA_tsdata_to_pwcgc</a></li><li><a href="GCCA_tsdata_to_smvgc.html">GCCA_tsdata_to_smvgc</a></li></ul></div><h2>Granger causality: subsampling<a name="6"></a></h2><div><ul><li><a href="bootstrap_tsdata_to_mvgc.html">bootstrap_tsdata_to_mvgc</a></li><li><a href="bootstrap_tsdata_to_pwcgc.html">bootstrap_tsdata_to_pwcgc</a></li><li><a href="bootstrap_tsdata_to_smvgc.html">bootstrap_tsdata_to_smvgc</a></li><li><a href="bootstrap_tsdata_to_spwcgc.html">bootstrap_tsdata_to_spwcgc</a></li><li><a href="empirical_var_to_mvgc.html">empirical_var_to_mvgc</a></li><li><a href="empirical_var_to_pwcgc.html">empirical_var_to_pwcgc</a></li><li><a href="empirical_var_to_smvgc.html">empirical_var_to_smvgc</a></li><li><a href="empirical_var_to_spwcgc.html">empirical_var_to_spwcgc</a></li><li><a href="permtest_tsdata_to_mvgc.html">permtest_tsdata_to_mvgc</a></li><li><a href="permtest_tsdata_to_pwcgc.html">permtest_tsdata_to_pwcgc</a></li><li><a href="permtest_tsdata_to_smvgc.html">permtest_tsdata_to_smvgc</a></li><li><a href="permtest_tsdata_to_spwcgc.html">permtest_tsdata_to_spwcgc</a></li></ul></div><h2>Statistics<a name="7"></a></h2><div><ul><li><a href="consistency.html">consistency</a></li><li><a href="demean.html">demean</a></li><li><a href="empirical_cdf.html">empirical_cdf</a></li><li><a href="empirical_cdfi.html">empirical_cdfi</a></li><li><a href="empirical_confint.html">empirical_confint</a></li><li><a href="empirical_cval.html">empirical_cval</a></li><li><a href="empirical_pval.html">empirical_pval</a></li><li><a href="infocrit.html">infocrit</a></li><li><a href="mvgc_cdf.html">mvgc_cdf</a></li><li><a href="mvgc_cdfi.html">mvgc_cdfi</a></li><li><a href="mvgc_confint.html">mvgc_confint</a></li><li><a href="mvgc_cval.html">mvgc_cval</a></li><li><a href="mvgc_pval.html">mvgc_pval</a></li><li><a href="rsquared.html">rsquared</a></li><li><a href="significance.html">significance</a></li><li><a href="whiteness.html">whiteness</a></li></ul></div><h2>Utilities<a name="8"></a></h2><div><ul><li><a href="bfft.html">bfft</a></li><li><a href="bifft.html">bifft</a></li><li><a href="cov2corr.html">cov2corr</a></li><li><a href="dlyap_aitr.html">dlyap_aitr</a></li><li><a href="genvar.html">genvar</a></li><li><a href="get_crand.html">get_crand</a></li><li><a href="get_hostname.html">get_hostname</a></li><li><a href="get_urand.html">get_urand</a></li><li><a href="helpon.html">helpon</a></li><li><a href="isbad.html">idbad</a></li><li><a href="isint.html">isint</a></li><li><a href="isposdef.html">isposdef</a></li><li><a href="maxabs.html">maxabs</a></li><li><a href="mvdetrend.html">mvdetrend</a></li><li><a href="mvdiff.html">mvdiff</a></li><li><a href="mvgc_makemex.html">mvgc_makemex</a></li><li><a href="plot_autocov.html">plot_autocov</a></li><li><a href="plot_confints.html">plot_confints</a></li><li><a href="plot_cpsd.html">plot_cpsd</a></li><li><a href="plot_pw.html">plot_pw</a></li><li><a href="plot_spw.html">plot_spw</a></li><li><a href="plot_varcoeffs.html">plot_varcoeffs</a></li><li><a href="ptic.html">ptic</a></li><li><a href="ptoc.html">ptoc</a></li><li><a href="quads.html">quads</a></li><li><a href="quadsr.html">quadsr</a></li><li><a href="rng_restore.html">rng_restore</a></li><li><a href="rng_save.html">rng_save</a></li><li><a href="rng_seed.html">rng_seed</a></li><li><a href="secs2hms.html">secs2hms</a></li><li><a href="sfreqs.html">sfreqs</a></li><li><a href="timestr.html">timestr</a></li><li><a href="trfun2var.html">trfun2var</a></li><li><a href="var2trfun.html">var2trfun</a></li><li><a href="var_decay.html">var_decay</a></li><li><a href="var_info.html">var_info</a></li><li><a href="var_normalise.html">var_normalise</a></li><li><a href="var_specrad.html">var_specrad</a></li><li><a href="warn_if.html">warn_if</a></li><li><a href="warn_supp.html">warn_supp</a></li><li><a href="warn_test.html">warn_test</a></li></ul></div><h2>Experimental<a name="9"></a></h2><div><ul><li><a href="mvgc_adf.html">mvgc_adf</a></li><li><a href="mvgc_kpss.html">mvgc_kpss</a></li><li><a href="tsdata_to_autocov_debias.html">tsdata_to_autocov_debias</a></li></ul></div><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+  </style></head><body><div class="content"><h1>MVGC Multivariate Granger Causality Toolbox - Function Reference</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Toolbox initialisation</a></li><li><a href="#2">Demonstration scripts</a></li><li><a href="#3">Core functionality</a></li><li><a href="#4">Granger causality</a></li><li><a href="#5">Granger causality: GCCA compatibility</a></li><li><a href="#6">Granger causality: subsampling</a></li><li><a href="#7">Statistics</a></li><li><a href="#8">Utilities</a></li><li><a href="#9">Experimental</a></li></ul></div><h2 id="1">Toolbox initialisation</h2><div><ul><li><a href="startup.html">startup</a></li></ul></div><h2 id="2">Demonstration scripts</h2><div><ul><li><a href="mvgc_demo.html">mvgc_demo</a></li><li><a href="mvgc_demo_statespace.html">mvgc_demo_statespace</a></li><li><a href="mvgc_demo_bootstrap.html">mvgc_demo_bootstrap</a></li><li><a href="mvgc_demo_GCCA.html">mvgc_demo_GCCA</a></li><li><a href="mvgc_demo_nonstationary.html">mvgc_demo_nonstationary</a></li><li><a href="mvgc_demo_permtest.html">mvgc_demo_permtest</a></li><li><a href="mvgc_demo_stats.html">mvgc_demo_stats</a></li><li><a href="var5_test.html">var5_test</a></li><li><a href="var9_test.html">var9_test</a></li></ul></div><h2 id="3">Core functionality</h2><div><ul><li><a href="autocov_to_cpsd.html">autocov_to_cpsd</a></li><li><a href="autocov_to_var.html">autocov_to_var</a></li><li><a href="autocov_xform.html">autocov_xform</a></li><li><a href="cpsd_to_autocov.html">cpsd_to_autocov</a></li><li><a href="cpsd_to_var.html">cpsd_to_var</a></li><li><a href="cpsd_xform.html">cpsd_xform</a></li><li><a href="tsdata_to_autocov.html">tsdata_to_autocov</a></li><li><a href="tsdata_to_cpsd.html">tsdata_to_cpsd</a></li><li><a href="tsdata_to_infocrit.html">tsdata_to_infocrit</a></li><li><a href="tsdata_to_var.html">tsdata_to_var</a></li><li><a href="var_to_autocov.html">var_to_autocov</a></li><li><a href="var_to_cpsd.html">var_to_cpsd</a></li><li><a href="var_to_tsdata.html">var_to_tsdata</a></li><li><a href="var_to_tsdata_nonstat.html">var_to_tsdata_nonstat</a></li></ul></div><h2 id="4">Granger causality</h2><div><ul><li><a href="autocov_to_mvgc.html">autocov_to_mvgc</a></li><li><a href="autocov_to_pwcgc.html">autocov_to_pwcgc</a></li><li><a href="autocov_to_smvgc.html">autocov_to_smvgc</a></li><li><a href="autocov_to_spwcgc.html">autocov_to_spwcgc</a></li><li><a href="smvgc_to_mvgc.html">smvgc_to_mvgc</a></li><li><a href="var_to_mvgc.html">var_to_mvgc</a></li><li><a href="var_to_pwcgc.html">var_to_pwcgc</a></li><li><a href="var_to_smvgc.html">var_to_smvgc</a></li><li><a href="var_to_spwcgc.html">var_to_spwcgc</a></li></ul></div><h2 id="5">Granger causality: GCCA compatibility</h2><div><ul><li><a href="GCCA_tsdata_to_mvgc.html">GCCA_tsdata_to_mvgc</a></li><li><a href="GCCA_tsdata_to_pwcgc.html">GCCA_tsdata_to_pwcgc</a></li><li><a href="GCCA_tsdata_to_smvgc.html">GCCA_tsdata_to_smvgc</a></li></ul></div><h2 id="6">Granger causality: subsampling</h2><div><ul><li><a href="bootstrap_tsdata_to_mvgc.html">bootstrap_tsdata_to_mvgc</a></li><li><a href="bootstrap_tsdata_to_pwcgc.html">bootstrap_tsdata_to_pwcgc</a></li><li><a href="bootstrap_tsdata_to_smvgc.html">bootstrap_tsdata_to_smvgc</a></li><li><a href="bootstrap_tsdata_to_spwcgc.html">bootstrap_tsdata_to_spwcgc</a></li><li><a href="empirical_var_to_mvgc.html">empirical_var_to_mvgc</a></li><li><a href="empirical_var_to_pwcgc.html">empirical_var_to_pwcgc</a></li><li><a href="empirical_var_to_smvgc.html">empirical_var_to_smvgc</a></li><li><a href="empirical_var_to_spwcgc.html">empirical_var_to_spwcgc</a></li><li><a href="permtest_tsdata_to_mvgc.html">permtest_tsdata_to_mvgc</a></li><li><a href="permtest_tsdata_to_pwcgc.html">permtest_tsdata_to_pwcgc</a></li><li><a href="permtest_tsdata_to_smvgc.html">permtest_tsdata_to_smvgc</a></li><li><a href="permtest_tsdata_to_spwcgc.html">permtest_tsdata_to_spwcgc</a></li></ul></div><h2 id="7">Statistics</h2><div><ul><li><a href="consistency.html">consistency</a></li><li><a href="demean.html">demean</a></li><li><a href="empirical_cdf.html">empirical_cdf</a></li><li><a href="empirical_cdfi.html">empirical_cdfi</a></li><li><a href="empirical_confint.html">empirical_confint</a></li><li><a href="empirical_cval.html">empirical_cval</a></li><li><a href="empirical_pval.html">empirical_pval</a></li><li><a href="infocrit.html">infocrit</a></li><li><a href="mvgc_cdf.html">mvgc_cdf</a></li><li><a href="mvgc_cdfi.html">mvgc_cdfi</a></li><li><a href="mvgc_confint.html">mvgc_confint</a></li><li><a href="mvgc_cval.html">mvgc_cval</a></li><li><a href="mvgc_pval.html">mvgc_pval</a></li><li><a href="rsquared.html">rsquared</a></li><li><a href="significance.html">significance</a></li><li><a href="whiteness.html">whiteness</a></li></ul></div><h2 id="8">Utilities</h2><div><ul><li><a href="bfft.html">bfft</a></li><li><a href="bifft.html">bifft</a></li><li><a href="cov2corr.html">cov2corr</a></li><li><a href="dlyap_aitr.html">dlyap_aitr</a></li><li><a href="genvar.html">genvar</a></li><li><a href="get_crand.html">get_crand</a></li><li><a href="get_hostname.html">get_hostname</a></li><li><a href="get_urand.html">get_urand</a></li><li><a href="helpon.html">helpon</a></li><li><a href="isbad.html">idbad</a></li><li><a href="isint.html">isint</a></li><li><a href="isposdef.html">isposdef</a></li><li><a href="logdet.html">logdet</a></li><li><a href="maxabs.html">maxabs</a></li><li><a href="multiinfo.html">multiinfo</a></li><li><a href="mvdetrend.html">mvdetrend</a></li><li><a href="mvdiff.html">mvdiff</a></li><li><a href="mvgc_makemex.html">mvgc_makemex</a></li><li><a href="parcov.html">parcov</a></li><li><a href="plot_autocov.html">plot_autocov</a></li><li><a href="plot_confints.html">plot_confints</a></li><li><a href="plot_cpsd.html">plot_cpsd</a></li><li><a href="plot_pw.html">plot_pw</a></li><li><a href="plot_spw.html">plot_spw</a></li><li><a href="plot_varcoeffs.html">plot_varcoeffs</a></li><li><a href="ptic.html">ptic</a></li><li><a href="ptoc.html">ptoc</a></li><li><a href="quads.html">quads</a></li><li><a href="quadsr.html">quadsr</a></li><li><a href="rng_restore.html">rng_restore</a></li><li><a href="rng_save.html">rng_save</a></li><li><a href="rng_seed.html">rng_seed</a></li><li><a href="secs2hms.html">secs2hms</a></li><li><a href="sfreqs.html">sfreqs</a></li><li><a href="sgtitlex.html">sgtitlex</a></li><li><a href="ss2iss.html">ss2iss</a></li><li><a href="ss2itrfun.html">ss2itrfun</a></li><li><a href="timestr.html">timestr</a></li><li><a href="trfun2var.html">trfun2var</a></li><li><a href="var2trfun.html">var2trfun</a></li><li><a href="var2riss.html">var2riss</a></li><li><a href="var_decay.html">var_decay</a></li><li><a href="var_info.html">var_info</a></li><li><a href="var_acinfo.html">var_acinfo</a></li><li><a href="var_normalise.html">var_normalise</a></li><li><a href="var_specrad.html">var_specrad</a></li><li><a href="warn_if.html">warn_if</a></li><li><a href="warn_supp.html">warn_supp</a></li><li><a href="warn_test.html">warn_test</a></li></ul></div><h2 id="9">Experimental</h2><div><ul><li><a href="mvgc_adf.html">mvgc_adf</a></li><li><a href="mvgc_kpss.html">mvgc_kpss</a></li><li><a href="tsdata_to_autocov_debias.html">tsdata_to_autocov_debias</a></li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% MVGC Multivariate Granger Causality Toolbox - Function Reference
 %
@@ -76,6 +78,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 %% Demonstration scripts
 %
 % * <mvgc_demo.html mvgc_demo>
+% * <mvgc_demo_statespace.html mvgc_demo_statespace>
 % * <mvgc_demo_bootstrap.html mvgc_demo_bootstrap>
 % * <mvgc_demo_GCCA.html mvgc_demo_GCCA>
 % * <mvgc_demo_nonstationary.html mvgc_demo_nonstationary>
@@ -108,6 +111,10 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % * <autocov_to_smvgc.html autocov_to_smvgc>
 % * <autocov_to_spwcgc.html autocov_to_spwcgc>
 % * <smvgc_to_mvgc.html smvgc_to_mvgc>
+% * <var_to_mvgc.html var_to_mvgc>
+% * <var_to_pwcgc.html var_to_pwcgc>
+% * <var_to_smvgc.html var_to_smvgc>
+% * <var_to_spwcgc.html var_to_spwcgc>
 %
 %% Granger causality: GCCA compatibility
 %
@@ -163,10 +170,13 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % * <isbad.html idbad>
 % * <isint.html isint>
 % * <isposdef.html isposdef>
+% * <logdet.html logdet>
 % * <maxabs.html maxabs>
+% * <multiinfo.html multiinfo>
 % * <mvdetrend.html mvdetrend>
 % * <mvdiff.html mvdiff>
 % * <mvgc_makemex.html mvgc_makemex>
+% * <parcov.html parcov>
 % * <plot_autocov.html plot_autocov>
 % * <plot_confints.html plot_confints>
 % * <plot_cpsd.html plot_cpsd>
@@ -182,11 +192,16 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % * <rng_seed.html rng_seed>
 % * <secs2hms.html secs2hms>
 % * <sfreqs.html sfreqs>
+% * <sgtitlex.html sgtitlex>
+% * <ss2iss.html ss2iss>
+% * <ss2itrfun.html ss2itrfun>
 % * <timestr.html timestr>
 % * <trfun2var.html trfun2var>
 % * <var2trfun.html var2trfun>
+% * <var2riss.html var2riss>
 % * <var_decay.html var_decay>
 % * <var_info.html var_info>
+% * <var_acinfo.html var_acinfo>
 % * <var_normalise.html var_normalise>
 % * <var_specrad.html var_specrad>
 % * <warn_if.html warn_if>

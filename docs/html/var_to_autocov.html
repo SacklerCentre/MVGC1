@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>var_to_autocov</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="var_to_autocov.m"><style type="text/css">
+      --><title>var_to_autocov</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="var_to_autocov.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>var_to_autocov</h1><!--introduction--><p>Return autocovariance sequence for a VAR model</p><p><a href="matlab:open('var_to_autocov.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   [G,info] = var_to_autocov(A,SIG,acmaxlags,acdectol,aitr,maxiters,maxrelerr)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   A          VAR coefficients matrix
+  </style></head><body><div class="content"><h1>var_to_autocov</h1><!--introduction--><p>Return autocovariance sequence for a VAR model</p><p><a href="matlab:open('var_to_autocov.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   [G,info] = var_to_autocov(A,SIG,acmaxlags,acdectol,aitr,maxiters,maxrelerr)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   A          VAR coefficients matrix
    SIG        residuals covariance matrix
    acmaxlags  maximum autocovariance lags to calculate or (default) zero for automatic calculation
    acdectol   autocovariance decay tolerance (default: 1e-8)
@@ -81,14 +83,14 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
        iters      number of iterations if using iterative algorithm, else 0
        acrelerr   relative error of associated 1-lag solution
        acminlags  minimum lags required to achieve specified autocovariance decay factor
-       aclags     actual number of autocovariance lags calculated</pre><h2>Description<a name="3"></a></h2><p>Returns autocovariance sequence <tt>G</tt> defined as <img valign="middle" src="ii_acseq.png"> for a VAR model with coefficients <tt>A</tt> and (positive-definite) residual covariance matrix <tt>SIG</tt>, by "reverse-solving" the Yule-Walker equations</p><p><img vspace="5" hspace="24" src="eq_yweqs.png" alt=""> </p><p>(where  <img valign="middle" src="ii_Sigma.png"> = <tt>SIG</tt>). The algorithm solves the associated 1-lag problem - a discrete-time Lyapunov equation - and then calculates higher lags recursively [1].</p><p>Errors, warnings and diagnostics are returned in the <tt>info</tt> struct. Use the routine <a href="var_info.html"><tt>var_info</tt></a> (which should <i>always</i> be called after this function) to display this information. Possible errors are</p><pre>   info.error     info.errmsg
+       aclags     actual number of autocovariance lags calculated</pre><h2 id="3">Description</h2><p>Returns autocovariance sequence <tt>G</tt> defined as <img valign="middle" src="ii_acseq.png"> for a VAR model with coefficients <tt>A</tt> and (positive-definite) residual covariance matrix <tt>SIG</tt>, by "reverse-solving" the Yule-Walker equations</p><p><img vspace="5" hspace="24" src="eq_yweqs.png" alt=""> </p><p>(where  <img valign="middle" src="ii_Sigma.png"> = <tt>SIG</tt>). The algorithm solves the associated 1-lag problem - a discrete-time Lyapunov equation - and then calculates higher lags recursively [1].</p><p>Errors, warnings and diagnostics are returned in the <tt>info</tt> struct. Use the routine <a href="var_acinfo.html"><tt>var_acinfo</tt></a> (which should <i>always</i> be called after this function) to display this information. Possible errors are</p><pre>   info.error     info.errmsg
    ----------------------------------------------------------------------
        0          (no error, no message)
        1          unstable VAR (has unit root)
        2          residuals covariance matrix not positive-definite
        3          Lyapunov equation solver failed for some reason
        4          1-lag residuals covariance matrix not positive-definite
-   ----------------------------------------------------------------------</pre><p>For a stable VAR the the spectral radius <tt>info.rho</tt>  (see <a href="var_specrad.html"><tt>var_specrad</tt></a>) must be &lt; 1; this may be considered a unit root test for stationarity [1]. Then the autocovariance sequence decays approximately exponentially, by a factor equal to <tt>info.rho</tt>. The minimum number of lags required to achieve the specified autocovariance decay tolerance <tt>acdectol</tt> is calculated as <tt>info.acminlags</tt>, so that <tt>info.rho^info.acminlags &lt; acdectol</tt>. The actual number of lags <tt>info.aclags</tt> to which autocovariance is calculated is then set to the minimum of <tt>info.acminlags</tt> and the specified maximum number of lags, <tt>acmaxlags</tt> (if <tt>acmaxlags</tt> is not supplied - the recommended option - it defaults to <tt>info.acminlags</tt>). A warning is issued if <tt>info.aclags &lt; info.acminlags</tt>. In this case there is no guarantee that MVGCs - particularly in the spectral domain - will be accurate. However, if the spectral radius of the VAR model is close to 1, so that <tt>info.acminlags</tt> is unfeasibly large, there may be no alternative [note that most Granger causality libraries effectively set <tt>info.aclags</tt> to the model order]. The calculated 1-lag autocovariance matrix is also checked for positive-definitiveness. If this check fails, it may be an indication of an ill-conditioned VAR (possibly because residuals variances are too small, and/or the process is borderline stationary). In short, the <tt>info.error</tt> field <i>must</i> be checked by the caller: 0 signifies success, &gt; 0 signifies an error with corresponding message in <tt>info.errmsg</tt>. Attention should also be paid to any warnings in <tt>info.WARNINGn</tt>.</p><p>The <tt>aitr</tt> flag specifies a fast (but experimental) "accelerated" iterative Lyapunov solver algorithm (see <a href="dlyap_aitr.html"><tt>dlyap_aitr</tt></a>). If not set (default), the Control System Toolbox <a href="matlab:doc('dlyap')"><tt>dlyap</tt></a> solver routine is used if available, else a roughly equivalent (but slower) scripted algorithm based on Schur decomposition (see <a href="matlab:open('dlyap.m')"><tt>dlyap.m</tt></a> in the <tt>utils/control</tt> directory).</p><h2>References<a name="4"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] X. Kitagawa, An algorithm for solving the matrix equation X = F X F'+S,     <i>Internat. J. Control</i> 25(5), 1977.</p><p>[3] S. Hammarling, "Numerical solution of the stable, non-negative definite     Lyapunov equation", <i>IMA J. Numer. Anal.</i> 2, 1982.</p><h2>See also<a name="5"></a></h2><p><a href="var_specrad.html"><tt>var_specrad</tt></a> | <a href="var_info.html"><tt>var_info</tt></a> | <a href="matlab:doc('dlyap')"><tt>dlyap (ControlSystem Toolbox)</tt></a> | <a href="dlyap.html"><tt>dlyap (scripted Schur algorithm)</tt></a> | <a href="dlyap_aitr.html"><tt>dlyap_aitr</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   ----------------------------------------------------------------------</pre><p>For a stable VAR the the spectral radius <tt>info.rho</tt>  (see <a href="var_specrad.html"><tt>var_specrad</tt></a>) must be &lt; 1; this may be considered a unit root test for stationarity [1]. Then the autocovariance sequence decays approximately exponentially, by a factor equal to <tt>info.rho</tt>. The minimum number of lags required to achieve the specified autocovariance decay tolerance <tt>acdectol</tt> is calculated as <tt>info.acminlags</tt>, so that <tt>info.rho^info.acminlags &lt; acdectol</tt>. The actual number of lags <tt>info.aclags</tt> to which autocovariance is calculated is then set to the minimum of <tt>info.acminlags</tt> and the specified maximum number of lags, <tt>acmaxlags</tt> (if <tt>acmaxlags</tt> is not supplied - the recommended option - it defaults to <tt>info.acminlags</tt>). A warning is issued if <tt>info.aclags &lt; info.acminlags</tt>. In this case there is no guarantee that MVGCs - particularly in the spectral domain - will be accurate. However, if the spectral radius of the VAR model is close to 1, so that <tt>info.acminlags</tt> is unfeasibly large, there may be no alternative [note that most Granger causality libraries effectively set <tt>info.aclags</tt> to the model order]. The calculated 1-lag autocovariance matrix is also checked for positive-definitiveness. If this check fails, it may be an indication of an ill-conditioned VAR (possibly because residuals variances are too small, and/or the process is borderline stationary). In short, the <tt>info.error</tt> field <i>must</i> be checked by the caller: 0 signifies success, &gt; 0 signifies an error with corresponding message in <tt>info.errmsg</tt>. Attention should also be paid to any warnings in <tt>info.WARNINGn</tt>.</p><p>The <tt>aitr</tt> flag specifies a fast (but experimental) "accelerated" iterative Lyapunov solver algorithm (see <a href="dlyap_aitr.html"><tt>dlyap_aitr</tt></a>). If not set (default), the Control System Toolbox <a href="matlab:doc('dlyap')"><tt>dlyap</tt></a> solver routine is used if available, else a roughly equivalent (but slower) scripted algorithm based on Schur decomposition (see <a href="matlab:open('dlyap.m')"><tt>dlyap.m</tt></a> in the <tt>utils/control</tt> directory).</p><h2 id="4">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] X. Kitagawa, An algorithm for solving the matrix equation X = F X F'+S,     <i>Internat. J. Control</i> 25(5), 1977.</p><p>[3] S. Hammarling, "Numerical solution of the stable, non-negative definite     Lyapunov equation", <i>IMA J. Numer. Anal.</i> 2, 1982.</p><h2 id="5">See also</h2><p><a href="var_specrad.html"><tt>var_specrad</tt></a> | <a href="var_acinfo.html"><tt>var_acinfo</tt></a> | <a href="matlab:doc('dlyap')"><tt>dlyap (ControlSystem Toolbox)</tt></a> | <a href="dlyap.html"><tt>dlyap (scripted Schur algorithm)</tt></a> | <a href="dlyap_aitr.html"><tt>dlyap_aitr</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% var_to_autocov
 %
@@ -141,7 +143,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % higher lags recursively [1].
 %
 % Errors, warnings and diagnostics are returned in the |info| struct. Use the
-% routine <var_info.html |var_info|> (which should _always_ be called after this
+% routine <var_acinfo.html |var_acinfo|> (which should _always_ be called after this
 % function) to display this information. Possible errors are
 %
 %     info.error     info.errmsg
@@ -201,7 +203,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 %% See also
 %
 % <var_specrad.html |var_specrad|> |
-% <var_info.html |var_info|> |
+% <var_acinfo.html |var_acinfo|> |
 % <matlab:doc('dlyap') |dlyap (ControlSystem Toolbox)|> |
 % <dlyap.html |dlyap (scripted Schur algorithm)|> |
 % <dlyap_aitr.html |dlyap_aitr|>
@@ -219,7 +221,7 @@ function [G,info] = var_to_autocov(A,SIG,acmaxlags,acdectol,aitr,maxiters,maxrel
 
 if nargin < 3 || isempty(acmaxlags), acmaxlags = 0;     end % calculate maximum lags automatically
 if nargin < 4 || isempty(acdectol),  acdectol  = 1e-8;  end % autocovariance decay tolerance
-if nargin < 5 || isempty(aitr),      aitr      = false; end % use "accelerated" iterative Lyapunov equation solver 
+if nargin < 5 || isempty(aitr),      aitr      = false; end % use "accelerated" iterative Lyapunov equation solver
 
 % iterative algorithm only: ensure defaults for utils/dlyap_aitr.m.
 

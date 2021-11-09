@@ -13,7 +13,7 @@
 
 global mvgc_version;
 mvgc_version.major = 1;
-mvgc_version.minor = 0;
+mvgc_version.minor = 2;
 
 fprintf('[mvgc startup] Initialising MVGC toolbox version %d.%d\n', mvgc_version.major, mvgc_version.minor);
 

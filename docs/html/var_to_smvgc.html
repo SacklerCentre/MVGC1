@@ -1,0 +1,150 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>var_to_smvgc</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="var_to_smvgc.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function f = var_to_smvgc(A,SIG,x,y,fres)
+
+[n,n1,p] = size(A);
+assert(n1 == n,'VAR coefficients matrix has bad shape');
+[n1,n2] = size(SIG);
+assert(n1 == n && n2 == n,'Residuals covariance matrix must be square, and match coefficients matrix');
+
+x = x(:)'; % vectorise
+y = y(:)'; % vectorise
+
+assert(length(unique([x y])) == length([x y]),'x and y indices must be unique and non-overlapping');
+assert(all(x >=1 & x <= n),'some x indices out of range');
+assert(all(y >=1 & y <= n),'some y indices out of range');
+
+z = 1:n; z([x y]) = []; % indices of other variables (to condition out)
+r = [x z];
+w = [y z];
+
+h = fres+1;
+f = nan(1,h);
+
+H   = var2trfun(A,fres);
+SIGL  = chol(SIG,'lower');
+PSIGL = chol(parcov(SIG,w,x),'lower');
+
+if isempty(z) % unconditional (note: does not require reduced model)
+
+    for k = 1:h
+        HSIGL = H(x,:,k)*SIGL;
+        SR = HSIGL*HSIGL';
+        HR = H(x,y,k)*PSIGL;
+        f(k) = logdet(SR) - logdet(SR-HR*HR');
+    end
+
+else % conditional
+
+	nx = length(x);
+	ny = length(y);
+	nz = length(z);
+	nr = nx+nz;
+	xr = 1:nx;
+
+	pn   = p*n;
+	pn1  = pn-n;
+	pny  = p*ny;
+	pny1 = pny-ny;
+
+	% Solve the shrunken DARE
+
+	[KT,SIGR,rep] = var2riss(A,SIG,y,r);
+    if sserror(rep), return; end % check DARE report, bail out on error
+
+	% Calculate reduced SS parameters from shrunken DARE (note: SIGR is the same)
+
+	AR = [reshape(A,n,pn); eye(pn1) zeros(pn1,n)];
+	CR = reshape(A(r,:,:),nr,pn);
+
+	KR = zeros(pn,nr);
+	KR(r,:) = eye(nr);
+	qn = 0;
+	for qy = 0:ny:pny1
+		KR(qn+y,:) = KT(qy+1:qy+ny,:);
+		qn = qn+n;
+	end
+    BR = ss2itrfun(AR,CR,KR,fres);
+
+	% Calculate spectral GC
+
+    SR   = SIGR(xr,xr); % reduced model spectrum is flat!
+    LDSR = logdet(SR);
+    for k = 1:h
+        HR   = BR(xr,:,k)*H(r,w,k)*PSIGL;
+        f(k) = LDSR - logdet(SR-HR*HR');
+    end
+
+end
+
+##### SOURCE END #####
+--></body></html>

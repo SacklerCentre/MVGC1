@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>tsdata_to_infocrit</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="tsdata_to_infocrit.m"><style type="text/css">
+      --><title>tsdata_to_infocrit</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="tsdata_to_infocrit.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,13 +67,13 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>tsdata_to_infocrit</h1><!--introduction--><p>Calculate Akaike and Bayesian information criteria for VAR models from time series data</p><p><a href="matlab:open('tsdata_to_infocrit.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   [aic,bic,moaic,mobic] = tsdata_to_infocrit(X,morder,regmode,verb)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>. time sries data <i>input</i></p><pre>   X          multi-trial time series data
+  </style></head><body><div class="content"><h1>tsdata_to_infocrit</h1><!--introduction--><p>Calculate Akaike and Bayesian information criteria for VAR models from time series data</p><p><a href="matlab:open('tsdata_to_infocrit.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   [aic,bic,moaic,mobic] = tsdata_to_infocrit(X,morder,regmode,verb)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>. time sries data <i>input</i></p><pre>   X          multi-trial time series data
    morder     maximum VAR model order or vector of model orders (see Description)
    regmode    regression mode: 'LWR' (default) or 'OLS'
    verb       verbosity flag: true (default) or false</pre><p><i>output</i></p><pre>   aic        vector of AIC values
    bic        vector of BIC values
    moaic      optimal model order according to AIC
-   mobic      optimal model order according to BIC</pre><h2>Description<a name="3"></a></h2><p>Calculates Akaike (AIC) and Bayesian (BIC) information criteria for VAR models from time series data <tt>X</tt>, which may be single- or multi-trial. Information criteria are returned in the (column) vectors <tt>aic</tt>, <tt>bic</tt>; see <a href="infocrit.html"><tt>infocrit</tt></a>. Optimal model orders according to the respective criteria are returned in <tt>moaic</tt>, <tt>mobic</tt>.</p><p>The regression mode is set by the <tt>regmode</tt> parameter, which may be <tt>'LWR'</tt> (default) or <tt>'OLS'</tt>. The former uses Morf's version of the LWR algorithm [1,2] while the latter calculates the OLS solution to regressions via QR decomposition. The LWR algorithm should be faster, as regressions are performed recursively so that the information criteria may be calculated "on the fly".</p><p>The LWR algorithm must fit a VAR model at all model orders up to the maximum; in this case the <tt>morder</tt> parameter must be a scalar representing the maximum model order. For the OLS mode, <tt>morder</tt> may again be a scalar representing the maximum model order, or it may be a vector of model orders.</p><p>If the <tt>verb</tt> (verbosity) flag is set (default), progress is reported; otherwise only warnings are reported.</p><p>If a VAR parameter estimate fails - because of ill-conditioned regression, or the residuals covariance matrix comes out as non positive-definite - a <tt>NaN</tt> is returned for that model order. This may be an indication that the time series data on which the autocovariance sequence estimate was based is not sufficiently stationary, is not of sufficient length, has (possibly lagged) colinearities, or has a highly skewed distribution.</p><h2>References<a name="4"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] M. Morf, A. Viera, D. T. L. Lee and T. Kailath, "Recursive Multichannel Maximum Entropy Spectral Estimation", <i>IEEE Trans. Geosci. Elec.</i>, 16(2), 1978.</p><h2>See also<a name="5"></a></h2><p><a href="infocrit.html"><tt>infocrit</tt></a> | <a href="tsdata_to_var.html"><tt>tsdata_to_var</tt></a> | <a href="mvgc_demo.html"><tt>mvgc_demo</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   mobic      optimal model order according to BIC</pre><h2 id="3">Description</h2><p>Calculates Akaike (AIC) and Bayesian (BIC) information criteria for VAR models from time series data <tt>X</tt>, which may be single- or multi-trial. Information criteria are returned in the (column) vectors <tt>aic</tt>, <tt>bic</tt>; see <a href="infocrit.html"><tt>infocrit</tt></a>. Optimal model orders according to the respective criteria are returned in <tt>moaic</tt>, <tt>mobic</tt>.</p><p>The regression mode is set by the <tt>regmode</tt> parameter, which may be <tt>'LWR'</tt> (default) or <tt>'OLS'</tt>. The former uses Morf's version of the LWR algorithm [1,2] while the latter calculates the OLS solution to regressions via QR decomposition. The LWR algorithm should be faster, as regressions are performed recursively so that the information criteria may be calculated "on the fly".</p><p>The LWR algorithm must fit a VAR model at all model orders up to the maximum; in this case the <tt>morder</tt> parameter must be a scalar representing the maximum model order. For the OLS mode, <tt>morder</tt> may again be a scalar representing the maximum model order, or it may be a vector of model orders.</p><p>If the <tt>verb</tt> (verbosity) flag is set (default), progress is reported; otherwise only warnings are reported.</p><p>If a VAR parameter estimate fails - because of ill-conditioned regression, or the residuals covariance matrix comes out as non positive-definite - a <tt>NaN</tt> is returned for that model order. This may be an indication that the time series data on which the autocovariance sequence estimate was based is not sufficiently stationary, is not of sufficient length, has (possibly lagged) colinearities, or has a highly skewed distribution.</p><p><b><i>Note</i></b>:  LWR implementation patched March 2018 to correct an initialisation error (many thanks to Gonzalo Camba-Mendez for the heads-up). The error meant that the algorithm was not strictly "minimum phase", so that coefficien estimates were potentially unstable. (Note that the OLS algorithm, which returns (pseudo) maximum-likelihood estimates, is not guaranteed to return stable estimates.)</p><h2 id="4">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] M. Morf, A. Viera, D. T. L. Lee and T. Kailath, "Recursive Multichannel Maximum Entropy Spectral Estimation", <i>IEEE Trans. Geosci. Elec.</i>, 16(2), 1978.</p><h2 id="5">See also</h2><p><a href="infocrit.html"><tt>infocrit</tt></a> | <a href="tsdata_to_var.html"><tt>tsdata_to_var</tt></a> | <a href="mvgc_demo.html"><tt>mvgc_demo</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% tsdata_to_infocrit
 %
@@ -132,6 +134,13 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % sufficiently stationary, is not of sufficient length, has (possibly lagged)
 % colinearities, or has a highly skewed distribution.
 %
+% *_Note_*:  LWR implementation patched March 2018 to correct an initialisation
+% error (many thanks to Gonzalo Camba-Mendez for the heads-up). The error meant
+% that the algorithm was not strictly "minimum phase", so that coefficien
+% estimates were potentially unstable. (Note that the OLS algorithm, which
+% returns (pseudo) maximum-likelihood estimates, is not guaranteed to return
+% stable estimates.)
+%
 %% References
 %
 % [1] L. Barnett and A. K. Seth,
@@ -162,10 +171,7 @@ if nargin < 4 || isempty(verb),    verb    = true;  end
 
 [n,m,N] = size(X);
 
-X = demean(X); % no constant term
-
-% aicmin = NaN;
-% bicmin = NaN;
+X = demean(X,2); % no constant term, normalise
 
 % store lags
 
@@ -235,132 +241,95 @@ if  strcmpi(regmode,'OLS') % OLS (QR decomposition)
         if verb, fprintf(1,'\n'); end
     end
 
-elseif strcmpi(regmode,'LWR') % LWR (Morf)
+elseif strcmpi(regmode,'LWR') % LWR (Morf): patched, March 2018 to correct initialisation error (many thanks to Gonzalo Camba-Mendez for the heads-up)
 
     assert(isscalar(morder) && morder > 0,'model order must be a positive scalar');
 
-    q = morder;
-    assert(q < m, 'model order too large (must be < %d)',m);
-    q1 = q+1;
-    q1n = q1*n;
+    aic = nan(morder,1);
+    bic = nan(morder,1);
 
-    aic = nan(q,1);
-    bic = nan(q,1);
+	q = morder;
+	q1 = q+1;
+	qn = q*n;
+	q1n = q1*n;
 
-    I = eye(n);
+	I = eye(n);
 
     % initialise recursion
 
-    AF = zeros(n,q1n); % forward  AR coefficients
-    AB = zeros(n,q1n); % backward AR coefficients (reversed compared with Morf's treatment)
+	M = N*m;
+	E = reshape(X,n,M);
+    IC = inv(chol(E*E','lower')); % inverse covariance square root
 
-    k  = 1;            % model order is k-1
+    k  = 1;
     kn = k*n;
     M  = N*(m-k);
+    kk = 1:k;
     kf = 1:kn;         % forward  indices
     kb = q1n-kn+1:q1n; % backward indices
 
-    XF = reshape(XX(:,1:k,k+1:m,:),kn,M);
-    XB = reshape(XX(:,1:k,k:m-1,:),kn,M);
+    AF = zeros(n,q1n); AF(:,kf) = IC; % forward  AR coefficients
+    AB = zeros(n,q1n); AB(:,kb) = IC; % backward AR coefficients (reversed compared with [2])
 
-    [CXF,cholp] = chol(XF*XF');
-    if cholp
-        fprintf(2,'WARNING: initialisation failed\n');
-        return % it's a show-stopper!
-    end
-
-    [CXB,cholp] = chol(XB*XB');
-    if cholp
-        fprintf(2,'WARNING: initialisation failed\n');
-        return % it's a show-stopper!
-    end
-
-    owstate = warn_supp;
-    AF(:,kf) = CXF'\I;
-    AB(:,kb) = CXB'\I;
-    [iw,~,wid]= warn_test(owstate,[],false);
-    if iw
-        fprintf(2,'initialisation failed (%s)\n',wid);
-        return % it's a show-stopper!
-    end
-
-    % and loop
+    % LWR recursion
 
     while k <= q
 
         if verb, fprintf('model order = %d',k); end
 
-        EF = AF(:,kf)*reshape(XX(:,1:k,k+1:m,:),kn,M); % forward  prediction errors
-        EB = AB(:,kb)*reshape(XX(:,1:k,k:m-1,:),kn,M); % backward prediction errors
+        EF = AF(:,kf)*reshape(XX(:,kk,k+1:m,:),kn,M); % forward  prediction errors
+        EB = AB(:,kb)*reshape(XX(:,kk,k:m-1,:),kn,M); % backward prediction errors
 
-        [CEF,cholp] = chol(EF*EF');
-        if cholp
+        wstate = warning('off','all'); lastwarn('');
+        R = (chol(EF*EF','lower')\EF)*(chol(EB*EB','lower')\EB)'; % normalised reflection coefficients
+        wmsg = lastwarn; warning(wstate);
+        if ~isempty(wmsg) % rank-deficient?
             if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed\n');
-            break % it's a show-stopper!
+            fprintf(2,'  WARNING: reflection coefficients estimation may be problematic (%s)',wmsg);
+            % not necessarily a show-stopper - carry on
+        end
+        if isbad(R) % something went badly wrong
+            if ~verb, fprintf('model order = %d',k); end
+            fprintf(2,'  WARNING: reflection coefficients estimation failed\n');
+            continue % show-stopper
         end
 
-        [CEB,cholp] = chol(EB*EB');
-        if cholp
-            if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed\n');
-            break % it's a show-stopper!
-        end
-
-        R = CEF'\(EF*EB')/CEB;       % normalised reflection coefficients
-
-        [CRF,cholp] = chol(I-R*R');
-        if cholp
-            if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed\n');
-            break % it's a show-stopper!
-        end
-
-        [CRB,cholp] = chol(I-R'*R);
-        if cholp
-            if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed\n');
-            break % it's a show-stopper!
-        end
-
+		kp = k;
         k  = k+1;
         kn = k*n;
         M  = N*(m-k);
+		kk = 1:k;
         kf = 1:kn;
         kb = q1n-kn+1:q1n;
 
         AFPREV = AF(:,kf);
         ABPREV = AB(:,kb);
 
-        owstate = warn_supp;
-        AF(:,kf) = CRF'\(AFPREV-R*ABPREV);
-        AB(:,kb) = CRB'\(ABPREV-R'*AFPREV);
-        [iw,~,wid]= warn_test(owstate,[],false);
-        if iw
-            if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed (%s)\n',wid);
-            break % it's a show-stopper!
+        wstate = warning('off','all'); lastwarn('');
+        AF(:,kf) = chol(I-R*R','lower')\(AFPREV-R*ABPREV);
+        AB(:,kb) = chol(I-R'*R,'lower')\(ABPREV-R'*AFPREV);
+        wmsg = lastwarn; warning(wstate);
+        if ~isempty(wmsg) % rank-deficient?
+            if ~verb, fprintf('model order = %d',kp); end
+            fprintf(2,'  WARNING: forward/backward VAR coefficients estimation may be problematic (%s)',wmsg);
+            % not necessarily a show-stopper - carry on
+        end
+        if isbad(AF) || isbad(AB) % something went badly wrong
+            if ~verb, fprintf('model order = %d',kp); end
+            fprintf(2,'  WARNING: forward/backward VAR coefficients estimation failed\n');
+            continue % show-stopper
         end
 
-        owstate = warn_supp;
-        E = AF(:,1:n)\AF(:,kf)*reshape(XX(:,1:k,k+1:m,:),kn,M);
-        [iw,~,wid]= warn_test(owstate,[],false);
-        if iw
-            if ~verb, fprintf('model order = %d',k); end
-            fprintf(2,'  WARNING: VAR estimation failed (%s)\n',wid);
-            break % it's a show-stopper!
-        end
-        
-        DSIG = det((E*E')/(M-1));
+        E = AF(:,1:n)\EF; % residuals
 
-        i = k-1;
+        DSIG = det((E*E')/(M-1)); % residuals covariance matrix determinant
         if DSIG <= 0
-            if ~verb, fprintf('model order = %d',i); end
-            fprintf(2,'  WARNING: residuals covariance matrix not positive definite\n');
-            break % show-stopper
+            if ~verb, fprintf('model order = %d',kp); end
+            fprintf(2,'  WARNING: residuals covariance not positive definite\n');
+            continue % show-stopper
         end
 
-        [aic(i),bic(i)] = infocrit(-(M/2)*log(DSIG),i*n*n,M); % -(M/2)*log(DSIG) is max log-likelihood
+        [aic(kp),bic(kp)] = infocrit(-(M/2)*log(DSIG),kp*n*n,M); % -(M/2)*log(DSIG) is max log-likelihood
         if verb, fprintf(1,'\n'); end
     end
 

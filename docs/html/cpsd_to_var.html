@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>cpsd_to_var</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="cpsd_to_var.m"><style type="text/css">
+      --><title>cpsd_to_var</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="cpsd_to_var.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,12 +67,12 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>cpsd_to_var</h1><!--introduction--><p>Spectral factorisation: calculate VAR parameters from cross-power spectral density</p><p><a href="matlab:open('cpsd_to_var.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   [H,SIG,iters] = cpsd_to_var(S,G0,maxiters,numtol)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   S          cross-power spectral density (cpsd) matrix
+  </style></head><body><div class="content"><h1>cpsd_to_var</h1><!--introduction--><p>Spectral factorisation: calculate VAR parameters from cross-power spectral density</p><p><a href="matlab:open('cpsd_to_var.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   [H,SIG,iters] = cpsd_to_var(S,G0,maxiters,numtol)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   S          cross-power spectral density (cpsd) matrix
    G0         covariance matrix of VAR process (default: calculated automatically from cpsd)
    maxiters   maximum iterations (default: 100)
    numtol     numerical tolerance (default: 1e-10)</pre><p><i>output</i></p><pre>   H          VAR transfer function matrix
    SIG        VAR residuals covartiance matrix
-   iters      number of iterations performed</pre><h2>Description<a name="3"></a></h2><p>Calculates the transfer function <tt>H</tt> and residuals covariance matrix <tt>SIG</tt> from the cpsd <tt>S</tt> and covariance matrix <tt>G0</tt> of a VAR process, using Wilson's spectral factorisation algorithm [2]. If <tt>G0</tt> is not supplied (default), then <tt>G</tt> is calculated from <tt>S</tt> (see <a href="cpsd_to_autocov.html"><tt>cpsd_to_autocov</tt></a>) and <tt>G0</tt> set to <tt>G(:,:,1)</tt>. The actual number of iterations performed is returned in <tt>iters</tt>. If the algorithm fails to converge to numerical tolerance <tt>numtol</tt> within <tt>maxiters</tt> iterations, an exception <tt>MVGC:XMaxItrs</tt> is thrown.</p><p><b><i>Note:</i></b> to calculate the VAR coefficients, use the utility function <a href="trfun2var.html"><tt>trfun2var</tt></a>.</p><p>Adapted from original code with the kind permission of <a href="http://math.iisc.ernet.in/~rangaraj/">Prof. G. Rangarajan</a> of the Dept. of Mathematics, Indian Institute of Science, Bangalore, India; see [3,4] for applications to Granger-causal analysis.</p><h2>References<a name="4"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] G. T. Wilson, "The factorization of matricial spectral densities", <i>SIAM Journal on Applied Mathematics</i>, 23(4), 1972.</p><p>[3] M. Dhamala, G. Rangarajan and M. Ding, "Estimating Granger causality from Fourier and wavelet transforms of time series data", <i>Phys. Rev. Lett.</i> 100, 2008.</p><p>[4] M. Dhamala, G. Rangarajan and M. Ding, "Analyzing information flow in brain networks with nonparametric Granger causality", <i>NeuroImage</i> 41, 2008.</p><h2>See also<a name="5"></a></h2><p><a href="cpsd_to_autocov.html"><tt>cpsd_to_autocov</tt></a> | <a href="autocov_to_var.html"><tt>autocov_to_var</tt></a> | <a href="trfun2var.html"><tt>trfun2var</tt></a></p><h2>Copyright notice<a name="6"></a></h2><p>[(C)] <i>Lionel Barnett and Anil K. Seth, 2012. See file <a href="matlab:open('license.txt')">license.txt</a> in root directory for licensing terms.</i></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   iters      number of iterations performed</pre><h2 id="3">Description</h2><p>Calculates the transfer function <tt>H</tt> and residuals covariance matrix <tt>SIG</tt> from the cpsd <tt>S</tt> and covariance matrix <tt>G0</tt> of a VAR process, using Wilson's spectral factorisation algorithm [2]. If <tt>G0</tt> is not supplied (default), then <tt>G</tt> is calculated from <tt>S</tt> (see <a href="cpsd_to_autocov.html"><tt>cpsd_to_autocov</tt></a>) and <tt>G0</tt> set to <tt>G(:,:,1)</tt>. The actual number of iterations performed is returned in <tt>iters</tt>. If the algorithm fails to converge to numerical tolerance <tt>numtol</tt> within <tt>maxiters</tt> iterations, an exception <tt>MVGC:XMaxItrs</tt> is thrown.</p><p><b><i>Note:</i></b> to calculate the VAR coefficients, use the utility function <a href="trfun2var.html"><tt>trfun2var</tt></a>.</p><p>Adapted from original code with the kind permission of <a href="http://math.iisc.ernet.in/~rangaraj/">Prof. G. Rangarajan</a> of the Dept. of Mathematics, Indian Institute of Science, Bangalore, India; see [3,4] for applications to Granger-causal analysis.</p><h2 id="4">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] G. T. Wilson, "The factorization of matricial spectral densities", <i>SIAM Journal on Applied Mathematics</i>, 23(4), 1972.</p><p>[3] M. Dhamala, G. Rangarajan and M. Ding, "Estimating Granger causality from Fourier and wavelet transforms of time series data", <i>Phys. Rev. Lett.</i> 100, 2008.</p><p>[4] M. Dhamala, G. Rangarajan and M. Ding, "Analyzing information flow in brain networks with nonparametric Granger causality", <i>NeuroImage</i> 41, 2008.</p><h2 id="5">See also</h2><p><a href="cpsd_to_autocov.html"><tt>cpsd_to_autocov</tt></a> | <a href="autocov_to_var.html"><tt>autocov_to_var</tt></a> | <a href="trfun2var.html"><tt>trfun2var</tt></a></p><h2 id="6">Copyright notice</h2><p>[(C)] <i>Lionel Barnett and Anil K. Seth, 2012. See file <a href="matlab:open('license.txt')">license.txt</a> in root directory for licensing terms.</i></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% cpsd_to_var
 %

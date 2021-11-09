@@ -49,7 +49,7 @@
 % higher lags recursively [1].
 %
 % Errors, warnings and diagnostics are returned in the |info| struct. Use the
-% routine <var_info.html |var_info|> (which should _always_ be called after this
+% routine <var_acinfo.html |var_acinfo|> (which should _always_ be called after this
 % function) to display this information. Possible errors are
 %
 %     info.error     info.errmsg
@@ -109,7 +109,7 @@
 %% See also
 %
 % <var_specrad.html |var_specrad|> |
-% <var_info.html |var_info|> |
+% <var_acinfo.html |var_acinfo|> |
 % <matlab:doc('dlyap') |dlyap (ControlSystem Toolbox)|> |
 % <dlyap.html |dlyap (scripted Schur algorithm)|> |
 % <dlyap_aitr.html |dlyap_aitr|>
@@ -127,7 +127,7 @@ function [G,info] = var_to_autocov(A,SIG,acmaxlags,acdectol,aitr,maxiters,maxrel
 
 if nargin < 3 || isempty(acmaxlags), acmaxlags = 0;     end % calculate maximum lags automatically
 if nargin < 4 || isempty(acdectol),  acdectol  = 1e-8;  end % autocovariance decay tolerance
-if nargin < 5 || isempty(aitr),      aitr      = false; end % use "accelerated" iterative Lyapunov equation solver 
+if nargin < 5 || isempty(aitr),      aitr      = false; end % use "accelerated" iterative Lyapunov equation solver
 
 % iterative algorithm only: ensure defaults for utils/dlyap_aitr.m.
 

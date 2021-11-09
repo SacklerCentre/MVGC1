@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>var_info</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="var_info.m"><style type="text/css">
+      --><title>var_info</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="var_info.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,92 +67,108 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>var_info</h1><!--introduction--><p>Display VAR information as returned by <tt>var_to_autocov</tt></p><p><a href="matlab:open('var_info.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   acerr = var_info(info,abort_on_error)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   info            info structure returned by var_to_autocov
-   abort_on_error  if set to true, abort if var_to_autocov reports an error</pre><p><i>output</i></p><pre>   acerr           flag set to true if var_to_autocov reports an error</pre><h2>Description<a name="3"></a></h2><p>Displays information (errors, warnings, diagnostics, <i>etc</i>.) reported by the routine <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a>; see that routine for details. This function should <i>always</i> be called after a call to <a href="var_to_autocov.html"><tt>var_to_autocov</tt></a>.</p><h2>See also<a name="4"></a></h2><p><a href="var_to_autocov.html"><tt>var_to_autocov</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+  </style></head><body><div class="content"><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% var_info
-%
-% Display VAR information as returned by |var_to_autocov|
-%
-% <matlab:open('var_info.m') code>
-%
-%% Syntax
-%
-%     acerr = var_info(info,abort_on_error)
-%
-%% Arguments
-%
-% See also <mvgchelp.html#4 Common variable names and data structures>.
-%
-% _input_
-%
-%     info            info structure returned by var_to_autocov
-%     abort_on_error  if set to true, abort if var_to_autocov reports an error 
-%
-% _output_
-%
-%     acerr           flag set to true if var_to_autocov reports an error
-%
-%% Description
-%
-% Displays information (errors, warnings, diagnostics, _etc_.) reported by the
-% routine <var_to_autocov.html |var_to_autocov|>; see that routine for details.
-% This function should _always_ be called after a call to <var_to_autocov.html
-% |var_to_autocov|>.
-%
-%% See also
-%
-% <var_to_autocov.html |var_to_autocov|>
-%
-% (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
-% installation directory for licensing terms.
-%
-%%
+function info = var_info(A,V,report)
 
-function acerr = var_info(info,abort_on_error)
+if nargin < 3 || isempty(report), report = 1; end % default: print out report
 
-if nargin < 2 || isempty(abort_on_error), abort_on_error = true; end
+[n,n1,p] = size(A);
+assert(n1 == n,'VAR coefficients matrix has bad shape');
+[n1,n2]  = size(V);
+assert(n1 == n && n2 == n,'Residuals covariance matrix must be square and match VAR coefficients matrix');
+pn1 = (p-1)*n;
 
-acerr = info.error;
+info.error = uint32(0);
 
-fprintf('\nVAR info:\n');
-if info.error
-    fprintf(2,'    ERROR: %s\n',info.errmsg);
+info.observ = n;
+info.morder = p;
+
+% calculate spectral radius
+
+info.rho = max(abs(eig([reshape(A,n,p*n); eye(pn1) zeros(pn1,n)],'nobalance'))); % v2.0 - don't balance!
+
+info.acdec = ceil(0.5*log(eps)/log(info.rho)); % so that autocov decays to < sqrt(eps), (probably ~ 1.5e-8)
+
+if maxabs(triu(V,1)-triu(V',1)) > eps
+    info.sigspd = 1; % not symmetric
 else
-    fprintf('    no errors\n');
-end
-
-if info.warnings > 0
-    for n = 1:info.warnings
-        fprintf(2,'    WARNING: %s\n',info.warnmsg{n});
+    [~,cholp] = chol(V,'lower');
+    if cholp > 0
+        info.sigspd = 2; % symmetric, but not positive definite
+    else
+        info.sigspd = 0; % symmetric, positive definite
     end
-else
-    fprintf('    no warnings\n');
+end
+info.mii = multiinfo(V);        % multi-information (generalised correlation)
+info.umii = multiinfo(n,true);  % multi-information for uniform random n x n correlation matrix, for comparison
+
+%{
+if rand < 0.1 % test intermittent errors
+    info.mii = -0.5;
+end
+%}
+
+rhotol = sqrt(eps);
+
+if     info.rho > 1+rhotol, disp('ex'); info.error = bitset(info.error,1); % explosive
+elseif info.rho > 1-rhotol, disp('ur'); info.error = bitset(info.error,2); % unit root
 end
 
-if ~isnan(info.rho)
-    fprintf('    spectral radius   : %f\n',info.rho);
+if     info.sigspd == 1,     info.error = bitset(info.error,5); % not symmetric
+elseif info.sigspd == 2,     info.error = bitset(info.error,6); % not positive definite
 end
 
-if ~isnan(info.iters)
-    fprintf('    iterations        : %d\n',info.iters);
+if     info.mii < 0,         info.error = bitset(info.error,7); % negative
 end
 
-if ~isnan(info.acrelerr)
-    fprintf('    ac relative error : %g\n',info.acrelerr);
+if report == 1 % print out report
+
+    fprintf('\nVAR info:\n');
+
+    fprintf('    variables         = %d\n',info.observ);
+
+    fprintf('    model order       = %d\n',info.morder);
+
+    fprintf('    AR spectral norm  = %.4f',info.rho);
+    if      bitget(info.error,1), fprintf(2,'    ERROR: unstable (explosive)\n');
+    elseif  bitget(info.error,2), fprintf(2,'    ERROR: unstable (unit root)\n');
+    else    fprintf('    stable (autocorrelation decay ~ %d)\n',info.acdec);
+    end
+
+    fprintf('    residuals covariance matrix');
+    if     bitget(info.error,5), fprintf(2,'     ERROR: not symmetric\n');
+    elseif bitget(info.error,6), fprintf(2,'     ERROR: not positive definite\n');
+    elseif bitget(info.error,7), fprintf(2,'     ERROR: multi-information negative\n');
+    else   fprintf('   symmetric, pos. def. (mii = %.4f, uniform = %.4f)\n',info.mii,info.umii);
+    end
+
+    fprintf('\n');
+
+elseif report > 1 % format error message(s) string
+
+    if ~info.error, info.errmsg = ''; return; end % no errors to report
+
+    info.nerrors = nnz(bitget(info.error,1:8)); % number of errors
+
+    if info.nerrors > 1
+        info.errmsg = 'VAR ERRORS';
+    else
+        info.errmsg = 'VAR ERROR';
+    end
+
+    if      bitget(info.error,1), info.errmsg = [info.errmsg sprintf(': AR spectral norm = %.6f - unstable (explosive)',info.rho)];
+    elseif  bitget(info.error,2), info.errmsg = [info.errmsg sprintf(': AR spectral norm = %.6f - unstable (unit root)',info.rho)];
+    end
+
+    if     bitget(info.error,5), info.errmsg = [info.errmsg ': res. cov. matrix not symmetric'];
+    elseif bitget(info.error,6), info.errmsg = [info.errmsg ': res. cov. matrix not positive definite'];
+    end
+
+    if     bitget(info.error,7), info.errmsg = [info.errmsg sprintf(': multi-information = %.6f - negative',info.mii)];
+    end
+
 end
-
-if ~isnan(info.acminlags)
-    fprintf('    minimum ac lags   : %d\n',info.acminlags);
-end
-
-if ~isnan(info.aclags)
-    fprintf('    actual  ac lags   : %d\n',info.aclags);
-end
-
-fprintf('\n');
-
-assert(~(info.error && abort_on_error),'VAR info: aborting on error.');
 
 ##### SOURCE END #####
 --></body></html>

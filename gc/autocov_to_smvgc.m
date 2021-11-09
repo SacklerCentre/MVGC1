@@ -66,7 +66,7 @@
 %
 % [2] Y. Chen, S. L. Bressler and M. Ding, "Frequency decomposition of
 % conditional Granger causality and application to multivariate neural
-% field potential data", _J. Neurosci. Methods_, 150, 2006. 
+% field potential data", _J. Neurosci. Methods_, 150, 2006.
 %
 % [*] In our experience the "partition matrix" method in ref. [2] appears to be
 % unsound, producing inaccurate results; hence we do not use it here.
@@ -115,23 +115,23 @@ if isempty(z) % unconditional
 
     owstate = warn_supp;
     [A,SIG] = autocov_to_var(G);                  % full regression
-    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(A), 'in full regression - regression failed'), return; end % show-stopper!
-    
+
     owstate = warn_supp;
     [S,H] = var_to_cpsd(A,SIG,fres);              % spectrum & transfer function
     warn_test(owstate,   'in spectral calculation');
     if warn_if(isbad(S), 'in spectral calculation - calculation failed'), return; end % show-stopper!
-    
+
     S = S(x,x,:);                                 % only need x part of cpsd
     H = H(x,y,:);                                 % only need x,y part of transfer function
     PSIG = SIG(y,y)-(SIG(y,x)/SIG(x,x))*SIG(x,y); % partial covariance
     for k = 1:h
-        f(k) = log(real(det(S(:,:,k)))) - log(real(det(S(:,:,k)-H(:,:,k)*PSIG*H(:,:,k)')));
+        f(k) = logdet(S(:,:,k)) - logdet(S(:,:,k)-H(:,:,k)*PSIG*H(:,:,k)');
     end
 
 else % conditional
-    
+
     % transform autocov by reduced regression of x,z
 
     xzy = [x z y];
@@ -141,33 +141,33 @@ else % conditional
     x = 1:nx;
     xz = 1:(nx+nz);
     zy = nx+1:n;
-    
+
     owstate = warn_supp;
     [AR,SIGR] = autocov_to_var(G(xz,xz,:));           % reduced regression
-    warn_test(owstate,    'in reduced regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,    'in reduced regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(AR), 'in reduced regression - regression failed'), return; end % show-stopper!
-    
+
     G = autocov_xform(G,AR,SIGR,useFFT);              % transform autocov
 
     % now do unconditional with transformed autocov
 
     owstate = warn_supp;
     [A,SIG] = autocov_to_var(G);                      % full regression
-    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_info''');
+    warn_test(owstate,   'in full regression - bad autocovariance matrix? Check output of ''var_acinfo''');
     if warn_if(isbad(A), 'in full regression - regression failed'), return; end % show-stopper!
-    
+
     S = SIGR(x,x);                                    % only need x part of cpsd - which is flat spectrum!
-    
+
     owstate = warn_supp;
     H = var2trfun(A,fres);                            % transfer function
     warn_test(owstate,   'in transfer function calculation');
     if warn_if(isbad(H), 'in transfer function calculation - calculation failed'), return; end % show-stopper!
-    
+
     H = H(x,zy,:);                                    % only need x,zy part of transfer function
     PSIG = SIG(zy,zy)-(SIG(zy,x)/SIG(x,x))*SIG(x,zy); % partial covariance
-    LDS = log(det(S));
+    LDS = logdet(S);
     for k = 1:h
-        f(k) = LDS-log(real(det(S-H(:,:,k)*PSIG*H(:,:,k)')));
+        f(k) = LDS-logdet(S-H(:,:,k)*PSIG*H(:,:,k)');
     end
 
 end

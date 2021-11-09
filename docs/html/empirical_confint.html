@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>empirical_confint</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="empirical_confint.m"><style type="text/css">
+      --><title>empirical_confint</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="empirical_confint.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,11 +67,11 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>empirical_confint</h1><!--introduction--><p>Confidence intervals for sample statistics based on estimated empirical null distribution</p><p><a href="matlab:open('empirical_confint.m')">code</a></p><!--/introduction--><h2>Syntax<a name="1"></a></h2><pre>   [xup,xlo] = empirical_confint(alpha,X,ptails,ksmooth)</pre><h2>Arguments<a name="2"></a></h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   alpha      significance level (scalar)
+  </style></head><body><div class="content"><h1>empirical_confint</h1><!--introduction--><p>Confidence intervals for sample statistics based on estimated empirical null distribution</p><p><a href="matlab:open('empirical_confint.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   [xup,xlo] = empirical_confint(alpha,X,ptails,ksmooth)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   alpha      significance level (scalar)
    X          matrix of sample statistics
    ptails     Pareto tails lower and upper probabilities (default: no Pareto tails)
    ksmooth    use kernel smoothing to estimate cdf (default: no smoothing)</pre><p><i>output</i></p><pre>   xup        matrix of upper confidence bounds
-   xlo        matrix of lower confidence bounds</pre><h2>Description<a name="3"></a></h2><p>Return upper and lower confidence bounds <tt>[xup,xlo]</tt> at significance level <tt>alpha</tt> based on the empirical distributions in <tt>X</tt> (derived e.g. from a bootstrap). The first dimension of <tt>X</tt> must index samples. <tt>NaN</tt> s are ignored. See <a href="empirical_cdfi.html"><tt>empirical_cdfi</tt></a> for details of other parameters.</p><h2>See also<a name="4"></a></h2><p><a href="empirical_cdf.html"><tt>empirical_cdf</tt></a> | <a href="empirical_cdfi.html"><tt>empirical_cdfi</tt></a> | <a href="empirical_pval.html"><tt>empirical_pval</tt></a> | <a href="empirical_cval.html"><tt>empirical_cval</tt></a> <a href="mvgc_demo_confint.html"><tt>mvgc_demo_confint</tt></a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+   xlo        matrix of lower confidence bounds</pre><h2 id="3">Description</h2><p>Return upper and lower confidence bounds <tt>[xup,xlo]</tt> at significance level <tt>alpha</tt> based on the empirical distributions in <tt>X</tt> (derived e.g. from a bootstrap). The first dimension of <tt>X</tt> must index samples. <tt>NaN</tt> s are ignored. See <a href="empirical_cdfi.html"><tt>empirical_cdfi</tt></a> for details of other parameters.</p><h2 id="4">See also</h2><p><a href="empirical_cdf.html"><tt>empirical_cdf</tt></a> | <a href="empirical_cdfi.html"><tt>empirical_cdfi</tt></a> | <a href="empirical_pval.html"><tt>empirical_pval</tt></a> | <a href="empirical_cval.html"><tt>empirical_cval</tt></a> <a href="mvgc_demo_confint.html"><tt>mvgc_demo_confint</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% empirical_confint
 %

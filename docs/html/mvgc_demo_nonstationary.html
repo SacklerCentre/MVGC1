@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>MVGC non-stationarity demo</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-27"><meta name="DC.source" content="mvgc_demo_nonstationary.m"><style type="text/css">
+      --><title>MVGC non-stationarity demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="mvgc_demo_nonstationary.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -23,7 +23,7 @@ a:visited { color:#004aa0; text-decoration:none; }
 
 p { padding:0px; margin:0px 0px 20px; }
 img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img { margin-bottom:0px; } 
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
 
 ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
 ul li { padding:0px; margin:0px 0px 7px 0px; }
@@ -38,11 +38,12 @@ ol li ul li { list-style:square; }
 
 .content { font-size:1.2em; line-height:140%; padding: 20px; }
 
-pre, tt, code { font-size:12px; }
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
 pre { margin:0px 0px 20px; }
-pre.error { color:red; }
 pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
 pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
 
 @media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
 
@@ -51,6 +52,7 @@ span.comment { color:#228B22 }
 span.string { color:#A020F0 }
 span.untermstring { color:#B20000 }
 span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
 
 .footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
 .footer p { margin:0px; }
@@ -65,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>MVGC non-stationarity demo</h1><!--introduction--><p>Demonstrates usage of the MVGC toolbox for non-stationary time series by "vertical" (windowed) regression on multi-trial data, for a minimal 2-variable VAR with linear trend and sinusoidally varying causal coefficient. Data is generated using the <a href="var_to_tsdata_nonstat.html"><tt>var_to_tsdata_nonstat</tt></a> routine.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">References</a></li><li><a href="#2">Parameters</a></li><li><a href="#3">Construct multiple non-stationary VAR time series</a></li><li><a href="#4">"Vertical" regression GC calculation</a></li></ul></div><h2>References<a name="1"></a></h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><h2>Parameters<a name="2"></a></h2><pre class="codeinput">ntrials   = 10;      <span class="comment">% number of trials</span>
+  </style></head><body><div class="content"><h1>MVGC non-stationarity demo</h1><!--introduction--><p>Demonstrates usage of the MVGC toolbox for non-stationary time series by "vertical" (windowed) regression on multi-trial data, for a minimal 2-variable VAR with linear trend and sinusoidally varying causal coefficient. Data is generated using the <a href="var_to_tsdata_nonstat.html"><tt>var_to_tsdata_nonstat</tt></a> routine.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">References</a></li><li><a href="#2">Parameters</a></li><li><a href="#3">Construct multiple non-stationary VAR time series</a></li><li><a href="#4">"Vertical" regression GC calculation</a></li></ul></div><h2 id="1">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><h2 id="2">Parameters</h2><pre class="codeinput">ntrials   = 10;      <span class="comment">% number of trials</span>
 nobs      = 1000;    <span class="comment">% number of observations per trial</span>
 dnobs     = 200;     <span class="comment">% initial observations to discard per trial</span>
 
@@ -88,7 +90,7 @@ alpha     = 0.05;    <span class="comment">% significance level for statistical 
 mhtc      = <span class="string">'SIDAK'</span>; <span class="comment">% multiple hypothesis test correction (see routine 'significance')</span>
 
 seed      = 0;       <span class="comment">% random seed (0 for unseeded)</span>
-</pre><h2>Construct multiple non-stationary VAR time series<a name="3"></a></h2><pre class="codeinput">rng_seed(seed);
+</pre><h2 id="3">Construct multiple non-stationary VAR time series</h2><pre class="codeinput">rng_seed(seed);
 
 nvars = 2;
 
@@ -142,7 +144,7 @@ hold <span class="string">off</span>
 xlim(xrange);
 title(<span class="string">'Time series (variable 1)'</span>);
 xlabel(<span class="string">'time'</span>);
-</pre><h2>"Vertical" regression GC calculation<a name="4"></a></h2><pre class="codeinput">wnobs = morder+wind;   <span class="comment">% number of observations in "vertical slice"</span>
+</pre><h2 id="4">"Vertical" regression GC calculation</h2><pre class="codeinput">wnobs = morder+wind;   <span class="comment">% number of observations in "vertical slice"</span>
 ek    = wnobs:ev:nobs; <span class="comment">% GC evaluation points</span>
 enobs = length(ek);    <span class="comment">% number of GC evaluations</span>
 
@@ -208,7 +210,7 @@ line(xrange,[Fc Fc],<span class="string">'Color'</span>,<span class="string">'r'
 legend(<span class="string">'theoretical'</span>,<span class="string">'estimated'</span>,<span class="string">'cval'</span>);
 title(<span class="string">'variable 2 -&gt; variable 1 causality'</span>);
 xlabel(<span class="string">'time'</span>);
-</pre><p><a href="mvgc_demo_nonstationary.html">back to top</a></p><p class="footer"><br>MVGC Toolbox v1.0. &copy; Lionel Barnett and Anil K. Seth, 2012.<br>See file <a href="matlab:open('license.txt')">license.txt</a> in installation directory for licensing terms.</a><br></p></div><!--
+</pre><p><a href="mvgc_demo_nonstationary.html">back to top</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% MVGC non-stationarity demo
 %

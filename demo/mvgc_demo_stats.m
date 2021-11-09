@@ -66,7 +66,7 @@ ptoc;
 %% Unit root stationarity tests  (EXPERIMENTAL)
 
 if etests
-    
+
     if ntrials > 1 % multitrial
         fprintf(2,'\nWARNING: unit-root stationarity tests are experimental and not really suitable for multi-trial data!\n');
     else
@@ -177,7 +177,7 @@ ptoc;
 
 % Report and check for errors.
 
-var_info(info,true); % report results (and bail out on error)
+var_acinfo(info,true); % report results (and bail out on error)
 
 % Empirical autocovariance
 

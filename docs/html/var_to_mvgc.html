@@ -1,0 +1,200 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>var_to_mvgc</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-11"><meta name="DC.source" content="var_to_mvgc.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>var_to_mvgc</h1><!--introduction--><p>Calculate conditional time-domain MVGC (multivariate Granger causality)</p><p><a href="matlab:open('var_to_mvgc.m')">code</a></p><!--/introduction--><h2 id="1">Syntax</h2><pre>   F = autocov_to_mvgc(G,x,y)</pre><h2 id="2">Arguments</h2><p>See also <a href="mvgchelp.html#4">Common variable names and data structures</a>.</p><p><i>input</i></p><pre>   A          VAR coefficients matrix
+   SIG        residuals covariance matrix
+   x          vector of indices of target (causee) multi-variable
+   y          vector of indices of source (causal) multi-variable
+   X          multi-trial time series data
+   regmode    regression mode: 'LWR' or 'OLS'
+   tstat      statistical inference test: 'F' for F-test, or 'LR' for likelihood-ratio (chi^2) test</pre><p><i>output</i></p><pre>   F          Granger causality
+   pval       p-value for specified statistical test</pre><h2 id="3">Description</h2><p>Returns the time-domain MVGC</p><p><img vspace="5" hspace="24" src="eq_mvgc.png" alt=""> </p><p>from the variable <tt>Y</tt> (specified by the vector of indices <tt>y</tt>) to the variable <tt>X</tt> (specified by the vector of indices <tt>x</tt>), conditional on all other variables <tt>Z</tt> represented in <tt>A</tt> and|SIG|, for a stationary VAR process with VAR coefficients matrix <tt>A</tt> and residuals covariance matrix <tt>SIG</tt>.</p><p>The algorithm first converts the VAR parameters to state-space innovations form (see <a href="var2riss.html"><tt>var2riss</tt></a>) then applies the method detailed in ref. [2] to calculate Granger causality <tt>F</tt> from the state-space parameters.</p><p>If the return value <tt>pval</tt> is specified, then p-values are calculated for the null hypothesis of zero Granger causality according to an F- or chi^2 test. In this case, the parameters <tt>X</tt>, <tt>regmode</tt> and <tt>tstat</tt> must be supplied.</p><p>The caller should take note of any warnings issued by this function and test results with a call <a href="isbad.html"><tt>isbad</tt></a> (<tt>F</tt>, <tt>false</tt>).</p><h2 id="4">References</h2><p>[1] L. Barnett and A. K. Seth, <a href="http://www.sciencedirect.com/science/article/pii/S0165027013003701">The MVGC     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal Inference</a>, <i>J. Neurosci. Methods</i> 223, 2014 [ <a href="matlab:open('mvgc_preprint.pdf')">preprint</a> ].</p><p>[2] L. Barnett and A. K. Seth, "Granger causality for state-space models", <i>Phys. Rev. E 91(4) Rapid Communication</i>, 2015 [ <a href="matlab:open('ssgc_preprint.pdf')">preprint</a> ].</p><h2 id="5">See also</h2><p><a href="var2riss.html"><tt>var2riss</tt></a> | <a href="isbad.html"><tt>isbad</tt></a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% var_to_mvgc
+%
+% Calculate conditional time-domain MVGC (multivariate Granger causality)
+%
+% <matlab:open('var_to_mvgc.m') code>
+%
+%% Syntax
+%
+%     F = autocov_to_mvgc(G,x,y)
+%
+%% Arguments
+%
+% See also <mvgchelp.html#4 Common variable names and data structures>.
+%
+% _input_
+%
+%     A          VAR coefficients matrix
+%     SIG        residuals covariance matrix
+%     x          vector of indices of target (causee) multi-variable
+%     y          vector of indices of source (causal) multi-variable
+%     X          multi-trial time series data
+%     regmode    regression mode: 'LWR' or 'OLS'
+%     tstat      statistical inference test: 'F' for F-test, or 'LR' for likelihood-ratio (chi^2) test
+%
+% _output_
+%
+%     F          Granger causality
+%     pval       p-value for specified statistical test
+%
+%% Description
+%
+% Returns the time-domain MVGC
+%
+% <<eq_mvgc.png>>
+%
+% from the variable |Y| (specified by the vector of indices |y|) to the
+% variable |X| (specified by the vector of indices |x|), conditional on all
+% other variables |Z| represented in |A| and|SIG|, for a stationary VAR process
+% with VAR coefficients matrix |A| and residuals covariance matrix |SIG|.
+%
+% The algorithm first converts the VAR parameters to state-space innovations form
+% (see <var2riss.html |var2riss|>) then applies the method detailed in ref. [2]
+% to calculate Granger causality |F| from the state-space parameters.
+%
+% If the return value |pval| is specified, then p-values are calculated for the
+% null hypothesis of zero Granger causality according to an F- or chi^2 test. In
+% this case, the parameters |X|, |regmode| and |tstat| must be supplied.
+%
+% The caller should take note of any warnings issued by this function and test
+% results with a call <isbad.html |isbad|> (|F|, |false|).
+%
+%% References
+%
+% [1] L. Barnett and A. K. Seth,
+% <http://www.sciencedirect.com/science/article/pii/S0165027013003701 The MVGC
+%     Multivariate Granger Causality Toolbox: A New Approach to Granger-causal
+% Inference>, _J. Neurosci. Methods_ 223, 2014
+% [ <matlab:open('mvgc_preprint.pdf') preprint> ].
+%
+% [2] L. Barnett and A. K. Seth, "Granger causality for state-space models",
+% _Phys. Rev. E 91(4) Rapid Communication_, 2015
+% [ <matlab:open('ssgc_preprint.pdf') preprint> ].
+%
+%% See also
+%
+% <var2riss.html |var2riss|> |
+% <isbad.html |isbad|>
+%
+% (C) Lionel Barnett and Anil K. Seth, 2012. See file license.txt in
+% installation directory for licensing terms.
+%
+%%
+function [F,pval] = var_to_mvgc(A,SIG,x,y,X,regmode,tstat)
+
+[n,n1,p] = size(A);
+assert(n1 == n,'VAR coefficients matrix has bad shape');
+[n1,n2] = size(SIG);
+assert(n1 == n && n2 == n,'Residuals covariance matrix must be square, and match VAR coefficients matrix');
+
+x = x(:)'; % vectorise
+y = y(:)'; % vectorise
+
+assert(length(unique([x y])) == length([x y]),'x and y indices must be unique and non-overlapping');
+assert(all(x >=1 & x <= n),'Some x indices out of range');
+assert(all(y >=1 & y <= n),'Some y indices out of range');
+
+z  = 1:n; z([x y]) = []; % indices of other variables (to condition out)
+xz = [x z];               % indices of variables in reduced model (omit source variables)
+
+nx = length(x);
+ny = length(y);
+xr = 1:nx; % indices of x in reduced model
+
+F = NaN;
+[~,SIGR,rep] = var2riss(A,SIG,y,xz); % residuals covariance matrix of reduced model
+if sserror(rep), return; end         % check DARE report, bail out on error
+F = logdet(SIGR(xr,xr)) - logdet(SIG(x,x));
+
+if nargout > 1 % calculate stats
+	assert(nargin > 5, 'Must supply regression mode for stats (same mode as used for VAR model estimate)');
+	assert(~isempty(X),'Must supply time-series data for stats');
+	if nargin < 7 || isempty(tstat), tstat = 'F'; end % default is F-test (better for shorter time series)
+	[n1,m,N] = size(X);
+	assert(n1 == n,    'Time series does not match VAR coefficients matrix');
+	M  = N*(m-p); % effective number of observations
+	d  = p*nx*ny; % degrees of freedom
+	[~,VR]  = tsdata_to_var(X(r,:,:),p,regmode);  % reduced regression
+	if     strcmpi(tstat,'F')  % F-test
+		d2 = nx*(M-p*n)-1; % F df2
+		K  = d2/d;         % F scaling factor
+		stat  = trace(VR(xr,xr))/trace(V(x,x)) - 1; % F-test statistic
+		pval = 1-fcdf(K*stat,d,d2);
+	elseif strcmpi(tstat,'LR') % Likelihood-ratio test
+		stat = logdet(VR(xr,xr)) - logdet(V(x,x)); % likelihood-ratio test statistic
+		pval = 1-chi2cdf(M*stat,d);
+	else
+		error('Unknown statistical test');
+	end
+end
+
+##### SOURCE END #####
+--></body></html>
