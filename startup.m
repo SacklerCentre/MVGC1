@@ -107,6 +107,18 @@ fprintf('[mvgc startup] Random number generator initialised\n');
 warning on all
 fprintf('[mvgc startup] All warnings enabled\n');
 
+% Important notes to users
+
+fprintf('[MVGC startup]\n');
+fprintf('[MVGC startup] NOTE 1: PLEASE DO NOT ADD THE FULL MVGC HIERARCHY TO YOUR MATLAB SEARCH PATH!\n');
+fprintf('[MVGC startup]         Doing so is likely to cause problems. This script has already set up\n');
+fprintf('[MVGC startup]         MVGC paths correctly for your Matlab environment.\n');
+fprintf('[MVGC startup]\n');
+fprintf('[MVGC startup] NOTE 2: It is highly recommended that any single-precision floating-point data\n');
+fprintf('[MVGC startup]         be converted to double precision; some routines may be inaccurate or\n');
+fprintf('[MVGC startup]         numerically unstable for single-precision input.\n');
+fprintf('[MVGC startup]\n');
+
 % Done
 
 fprintf('[mvgc startup] Initialisation complete (you may re-run ''startup'' at any time)\n');
