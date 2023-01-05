@@ -58,19 +58,13 @@ assert(p > 0,'bad number of lags');
 
 X = demean(X);
 
-if N > 1 % multi-trial
-    X = X(:,p+1:m,:);
-    X = X(:,:);              % stack data
-    E = E(:,:);              % stack residuals
-    s = N*(m-p);             % sample size (number of observations)
-else
-    X = X(:,p+1:m);
-    s = m-p;                 % sample size (number of observations)
-end
+M = N*(m-p);                     % effective number of observations
+X = reshape(X(:,p+1:m,:),n,M);   % concatenate trials for data
+E = E(:,:);                      % concatenate trials for residuals
 
-Y = X - E;                   % prediction
+Y = X-E;                         % prediction
 
-Rr = (X*X')/(s-1);           % covariance estimate
-Rs = (Y*Y')/(s-1);           % covariance estimate
+Rr = (X*X')/(M-1);               % covariance estimate
+Rs = (Y*Y')/(M-1);               % covariance estimate
 
 cons = 1 - norm(Rs-Rr)/norm(Rr); % compare matrix norms

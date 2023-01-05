@@ -91,6 +91,20 @@ if nargin < 3 || isempty(regmode), regmode = 'LWR'; end
 [n,m,N] = size(X);
 assert(p < m,'too many lags');
 
+M = N*(m-p); % effective number of observations
+
+if p == 0 % white noise!
+	A = zeros(n,n,0);
+	if nargout > 1
+		X0 = reshape(demean(X),n,M);
+		SIG = (X0*X0')/(M-1);
+		if nargout > 2
+			E = X; % the residuals are just the time series itself!
+		end
+	end
+	return
+end
+
 p1 = p+1;
 pn = p*n;
 p1n = p1*n;
@@ -102,8 +116,6 @@ E   = NaN; % assure a "bad" return value if anything goes wrong (see routine 'is
 X = demean(X); % no constant term
 
 if  strcmpi(regmode,'OLS') % OLS (QR decomposition)
-
-    M = N*(m-p);
 
     % stack lags
 
@@ -119,8 +131,6 @@ if  strcmpi(regmode,'OLS') % OLS (QR decomposition)
 
     if nargout > 1
         E   = X0-A*XL;             % residuals
-        SIG = (E*E')/(M-1);        % residuals covariance matrix
-        E   = reshape(E,n,m-p,N);  % put residuals back into per-trial form
     end
 
     A = reshape(A,n,n,p);          % so A(:,:,k) is the k-lag coefficients matrix
@@ -177,17 +187,23 @@ elseif strcmpi(regmode,'LWR') % LWR (Morf): patched, March 2018 to correct initi
 
 	A0 = AF(:,1:n);
     A = reshape(-A0\AF(:,n+1:p1n),n,n,p);
-    if isbad(A); return; end       % something went badly wrong
+    if isbad(A); return; end % something went badly wrong
 
     if nargout > 1
-		M   = N*(m-p);      % residuals lose p lags
-		E   = A0\EF;        % residuals
-        SIG = (E*E')/(M-1); % residuals covariance matrix (unbiased estimator)
-        if nargout > 2      % align residuals per-trial with data (lose p lags)
-			E = cat(2,nan(n,p,N),reshape(E,n,m-p,N));
-		end
+		E = A0\EF; % residuals
     end
 
 else
     error('bad regression mode ''%s''',regmode);
+end
+
+if nargout > 1
+	SIG = (E*E')/(M-1); % residuals covariance matrix (unbiased estimator)
+end
+
+if nargout > 1
+	SIG = (E*E')/(M-1); % residuals covariance matrix (unbiased estimator)
+	if nargout > 2 % pad first p lags of residuals with zeros to align with X
+		E = reshape(E,n,m-p,N);
+	end
 end

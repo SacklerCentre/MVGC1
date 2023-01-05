@@ -42,27 +42,22 @@
 function [RSQ,RSQADJ] = rsquared(X,E)
 
 [n,m,N] = size(X);
-p = m-size(E,2);     % number of lags in model
+p = m-size(E,2); % number of lags in model
 assert(m >= n,'too few observations');
 assert(size(E,1) == n && size(E,3) == N,'residuals don''t match data');
 assert(p > 0,'bad number of lags');
 
 X = demean(X);
 
-if N > 1 % multi-trial
-    X = X(:,p+1:m,:);
-    X = X(:,:);              % stack data
-    E = E(:,:);              % stack residuals
-    s = N*(m-p);             % sample size (number of observations)
-else
-    X = X(:,p+1:m);
-    s = m-p;                 % sample size (number of observations)
-end
-r = n*n*p;                   % number of regressors in model
+M = N*(m-p);                   % effective number of observations
+X = reshape(X(:,p+1:m,:),n,M); % concatenate trials for data
+E = E(:,:);                    % concatenate trials for residuals
 
-SSR = sum(E.^2,2)';          % residuals sum of squares
-SST = sum(X.^2,2)';          % total sum of squares
+r = n*n*p;                     % number of regressors in model
+
+SSR = sum(E.^2,2)';            % residuals sum of squares
+SST = sum(X.^2,2)';            % total sum of squares
 
 RSQ = 1 - SSR./SST;
 
-RSQADJ = 1 - ((s-1)/(s-r-1))*(1-RSQ);
+RSQADJ = 1 - ((M-1)/(M-r-1))*(1-RSQ);

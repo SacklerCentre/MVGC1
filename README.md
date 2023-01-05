@@ -1,7 +1,7 @@
 This is the MVGC Multivariate Granger Causality MATLAB toolbox, previously
 hosted at http://www.sussex.ac.uk/sackler/mvgc
 
-Current version is mvgc_v1.2, last updated Nov. 2021
+Current version is mvgc_v1.3, last updated March 2022
 
 **NOTE**: this version includes an implementation of the new, more efficient and accurate
 state-space method for GC calculation, as detailed in:

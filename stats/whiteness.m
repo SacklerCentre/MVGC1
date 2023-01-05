@@ -60,16 +60,21 @@
 function [dw,pval] = whiteness(X,E)
 
 [n,m,N] = size(X);
+p = m-size(E,2);     % number of lags in model
 assert(m >= n,'too few observations');
-assert(size(E,1) == n && size(E,3) == N,'residuals don''t match time series data');
+assert(size(E,1) == n && size(E,3) == N,'residuals don''t match data');
+assert(p > 0,'bad number of lags');
 
 X = demean(X);
+
+M = N*(m-p);                   % effective number of observations
+X = reshape(X(:,p+1:m,:),n,M); % concatenate trials for data
+E = E(:,:);                    % concatenate trials for residuals
 
 dw = zeros(1,n);
 pval = zeros(1,n);
 for i = 1:n
-    Ei = squeeze(E(i,:,:));
-    [dw(i),pval(i)] = durbinwatson(X(:,:),Ei(:)); % concatenate trials (ref. [2])
+    [dw(i),pval(i)] = durbinwatson(X,E(i,:));
 end
 
 function [dw,pval] = durbinwatson(X,E)
@@ -83,7 +88,7 @@ dw = sum(diff(E).^2)/sum(E.^2);
 
 % calculate critical values for the DW statistic using approx method (ref. [1])
 
-A = X*X'; 
+A = X*X';
 B = filter([-1,2,-1],1,X');
 B([1,m],:) = (X(:,[1,m])-X(:,[2,m-1]))';
 D = B/A;
